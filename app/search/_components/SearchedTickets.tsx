@@ -37,6 +37,7 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import Image from "next/image";
 import type { ConnectedTicket } from "@/models/connected-ticket";
 import TicketBlock from "@/components/ticket/Ticket";
+import apiClient from "@/lib/axios";
 
 /**
  * Converts time string (HH:MM or HH:MM:SS) to minutes for easy comparison
@@ -329,228 +330,158 @@ const TicketList: React.FC = () => {
     };
   }, [router]);
 
-  const fetchTickets = useCallback(
-    async (
-      directPageNumber: number,
-      connectedPageNumber: number,
-      isInitial = false
-    ) => {
-      // Prevent duplicate calls
-      if (fetchingRef.current) return;
+const fetchTickets = useCallback(
+  async (
+    directPageNumber: number,
+    connectedPageNumber: number,
+    isInitial = false
+  ) => {
+    if (fetchingRef.current) return;
 
-      const {
-        departureStation,
-        arrivalStation,
-        departureDate,
-        returnDate,
-        adult,
-        children,
-      } = validateAndUpdateDates();
+    const {
+      departureStation,
+      arrivalStation,
+      departureDate,
+      returnDate,
+      adult,
+      children,
+    } = validateAndUpdateDates();
 
-      if (!arrivalStation || !departureStation) {
-        toast({
-          title: "Error",
-          description: "Missing required parameters",
-          variant: "destructive",
-        });
-        return;
-      }
+    if (!arrivalStation || !departureStation) {
+      toast({
+        title: "Error",
+        description: "Missing required parameters",
+        variant: "destructive",
+      });
+      return;
+    }
 
-      try {
-        fetchingRef.current = true;
-        setIsLoading(true);
+    try {
+      fetchingRef.current = true;
+      setIsLoading(true);
 
-        if (isInitial) {
-          dispatch({ type: "SET_INITIAL_LOADING", payload: true });
-        } else {
-          dispatch({ type: "SET_LOADING", payload: true });
-        }
+      dispatch({ type: isInitial ? "SET_INITIAL_LOADING" : "SET_LOADING", payload: true });
 
-        // Determine if we're using multiple stations (All Stops)
-        const departureStationArray = departureStation
-          .split(",")
-          .filter((id) => id.trim());
-        const arrivalStationArray = arrivalStation
-          .split(",")
-          .filter((id) => id.trim());
-        const isMultipleStations =
-          departureStationArray.length > 1 || arrivalStationArray.length > 1;
+      const departureStationArray = departureStation.split(",").filter((id) => id.trim());
+      const arrivalStationArray = arrivalStation.split(",").filter((id) => id.trim());
+      const isMultipleStations = departureStationArray.length > 1 || arrivalStationArray.length > 1;
 
-        const baseParams = {
-          departureDate:
-            (isSelectingReturn ? returnDate || departureDate : departureDate) ||
-            "",
-          adults: adult.toString(),
-          children: children.toString(),
+      const baseParams = {
+        departureDate: (isSelectingReturn ? returnDate || departureDate : departureDate) || "",
+        adults: adult.toString(),
+        children: children.toString(),
+      };
+
+      const fetchPromises = [];
+
+      // --- DIRECT TICKETS ---
+      if (directPageNumber > 0) {
+        dispatch({ type: "SET_FETCHING_DIRECT", payload: true });
+
+        const directEndpoint = isMultipleStations 
+          ? "/ticket/search/multiple" 
+          : "/ticket/search";
+
+        const directParams = {
+          ...baseParams,
+          page: directPageNumber.toString(),
+          ...(isMultipleStations 
+            ? { 
+                departureStations: isSelectingReturn ? arrivalStation : departureStation,
+                arrivalStations: isSelectingReturn ? departureStation : arrivalStation 
+              }
+            : { 
+                departureStation: isSelectingReturn ? arrivalStation : departureStation,
+                arrivalStation: isSelectingReturn ? departureStation : arrivalStation 
+              }
+          ),
         };
 
-        const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/ticket`;
-
-        // Fetch both direct and connected tickets in parallel
-        const fetchPromises = [];
-
-        // Only fetch direct tickets if we need them
-        if (directPageNumber > 0) {
-          dispatch({ type: "SET_FETCHING_DIRECT", payload: true });
-
-          // Choose endpoint based on whether we have multiple stations
-          const directEndpoint = isMultipleStations
-            ? "/search/multiple"
-            : "/search";
-
-          // Build params based on single or multiple stations
-          const directParams: Record<string, string> = {
-            ...baseParams,
-            page: directPageNumber.toString(),
-          };
-
-          if (isMultipleStations) {
-            directParams.departureStations = isSelectingReturn
-              ? arrivalStation
-              : departureStation;
-            directParams.arrivalStations = isSelectingReturn
-              ? departureStation
-              : arrivalStation;
-          } else {
-            directParams.departureStation = isSelectingReturn
-              ? arrivalStation
-              : departureStation;
-            directParams.arrivalStation = isSelectingReturn
-              ? departureStation
-              : arrivalStation;
-          }
-
-          const directSearchUrl = new URLSearchParams(directParams);
-
-          fetchPromises.push(
-            fetch(`${apiUrl}${directEndpoint}?${directSearchUrl}`)
-              .then((res) =>
-                res.ok
-                  ? res.json()
-                  : Promise.reject(new Error("Direct fetch failed"))
-              )
-              .then((data) => ({ type: "direct", data: data.data || [] }))
-              .catch(() => ({ type: "direct", data: [] }))
-          );
-        }
-
-        // Only fetch connected tickets if we need them
-        if (connectedPageNumber > 0) {
-          dispatch({ type: "SET_FETCHING_CONNECTED", payload: true });
-
-          // For now, connected tickets use the regular endpoint with first station
-          const connectedParams: Record<string, string> = {
-            ...baseParams,
-            departureStation: isSelectingReturn
-              ? arrivalStation.split(",")[0]
-              : departureStation.split(",")[0],
-            arrivalStation: isSelectingReturn
-              ? departureStation.split(",")[0]
-              : arrivalStation.split(",")[0],
-            page: connectedPageNumber.toString(),
-          };
-
-          const connectedSearchUrl = new URLSearchParams(connectedParams);
-
-          fetchPromises.push(
-            fetch(`${apiUrl}/connected?${connectedSearchUrl}`)
-              .then((res) =>
-                res.ok
-                  ? res.json()
-                  : Promise.reject(new Error("Connected fetch failed"))
-              )
-              .then((data) => ({ type: "connected", data: data.data || [] }))
-              .catch(() => ({ type: "connected", data: [] }))
-          );
-        }
-
-        const results = await Promise.all(fetchPromises);
-
-        let newDirectTickets: Ticket[] = [];
-        let newConnectedTickets: ConnectedTicket[] = [];
-
-        results.forEach((result) => {
-          if (result.type === "direct") {
-            newDirectTickets = result.data;
-          } else if (result.type === "connected") {
-            newConnectedTickets = result.data;
-          }
-        });
-
-        // Handle results
-        if (isInitial) {
-          dispatch({ type: "SET_DIRECT_TICKETS", payload: newDirectTickets });
-          dispatch({
-            type: "SET_CONNECTED_TICKETS",
-            payload: newConnectedTickets,
-          });
-
-          // Auto-switch to show indirect routes if no direct routes available
-          if (newDirectTickets.length === 0 && newConnectedTickets.length > 0) {
-            dispatch({ type: "SET_SHOW_DIRECT_ONLY", payload: false });
-          }
-
-          // Check if we have any data at all
-          if (
-            newDirectTickets.length === 0 &&
-            newConnectedTickets.length === 0
-          ) {
-            dispatch({ type: "SET_NO_DATA", payload: true });
-            fetchNextAvailableDates();
-          } else {
-            dispatch({ type: "SET_NO_DATA", payload: false });
-          }
-        } else {
-          // Append new tickets for pagination
-          if (newDirectTickets.length > 0) {
-            dispatch({ type: "ADD_DIRECT_TICKETS", payload: newDirectTickets });
-          }
-          if (newConnectedTickets.length > 0) {
-            dispatch({
-              type: "ADD_CONNECTED_TICKETS",
-              payload: newConnectedTickets,
-            });
-          }
-        }
-
-        // Update pagination state
-        if (directPageNumber > 0) {
-          dispatch({ type: "SET_DIRECT_PAGE", payload: directPageNumber + 1 });
-          dispatch({
-            type: "SET_HAS_MORE_DIRECT",
-            payload: newDirectTickets.length >= 6,
-          });
-        }
-
-        if (connectedPageNumber > 0) {
-          dispatch({
-            type: "SET_CONNECTED_PAGE",
-            payload: connectedPageNumber + 1,
-          });
-          dispatch({
-            type: "SET_HAS_MORE_CONNECTED",
-            payload: newConnectedTickets.length >= 6,
-          });
-        }
-      } catch (err) {
-        toast({
-          title: "Error",
-          description: "Failed to fetch tickets",
-          variant: "destructive",
-        });
-        dispatch({ type: "SET_HAS_MORE_DIRECT", payload: false });
-        dispatch({ type: "SET_HAS_MORE_CONNECTED", payload: false });
-      } finally {
-        dispatch({ type: "SET_LOADING", payload: false });
-        dispatch({ type: "SET_INITIAL_LOADING", payload: false });
-        dispatch({ type: "SET_FETCHING_DIRECT", payload: false });
-        dispatch({ type: "SET_FETCHING_CONNECTED", payload: false });
-        setIsLoading(false);
-        fetchingRef.current = false;
+        fetchPromises.push(
+          apiClient.get(directEndpoint, { params: directParams })
+            .then((res) => ({ type: "direct", data: res.data.data || [] }))
+            .catch(() => ({ type: "direct", data: [] }))
+        );
       }
-    },
-    [isSelectingReturn, toast, setIsLoading, validateAndUpdateDates]
-  );
+
+      // --- CONNECTED TICKETS ---
+      if (connectedPageNumber > 0) {
+        dispatch({ type: "SET_FETCHING_CONNECTED", payload: true });
+
+        const connectedParams = {
+          ...baseParams,
+          departureStation: isSelectingReturn ? arrivalStation.split(",")[0] : departureStation.split(",")[0],
+          arrivalStation: isSelectingReturn ? departureStation.split(",")[0] : arrivalStation.split(",")[0],
+          page: connectedPageNumber.toString(),
+        };
+
+        fetchPromises.push(
+          apiClient.get("/ticket/connected", { params: connectedParams })
+            .then((res) => ({ type: "connected", data: res.data.data || [] }))
+            .catch(() => ({ type: "connected", data: [] }))
+        );
+      }
+
+      const results = await Promise.all(fetchPromises);
+
+      let newDirectTickets: Ticket[] = [];
+      let newConnectedTickets: ConnectedTicket[] = [];
+
+      results.forEach((result) => {
+        if (result.type === "direct") newDirectTickets = result.data;
+        if (result.type === "connected") newConnectedTickets = result.data;
+      });
+
+      // --- HANDLE RESULTS ---
+      if (isInitial) {
+        dispatch({ type: "SET_DIRECT_TICKETS", payload: newDirectTickets });
+        dispatch({ type: "SET_CONNECTED_TICKETS", payload: newConnectedTickets });
+
+        if (newDirectTickets.length === 0 && newConnectedTickets.length > 0) {
+          dispatch({ type: "SET_SHOW_DIRECT_ONLY", payload: false });
+        }
+
+        if (newDirectTickets.length === 0 && newConnectedTickets.length === 0) {
+          dispatch({ type: "SET_NO_DATA", payload: true });
+          fetchNextAvailableDates();
+        } else {
+          dispatch({ type: "SET_NO_DATA", payload: false });
+        }
+      } else {
+        if (newDirectTickets.length > 0) dispatch({ type: "ADD_DIRECT_TICKETS", payload: newDirectTickets });
+        if (newConnectedTickets.length > 0) dispatch({ type: "ADD_CONNECTED_TICKETS", payload: newConnectedTickets });
+      }
+
+      // --- UPDATE PAGINATION ---
+      if (directPageNumber > 0) {
+        dispatch({ type: "SET_DIRECT_PAGE", payload: directPageNumber + 1 });
+        dispatch({ type: "SET_HAS_MORE_DIRECT", payload: newDirectTickets.length >= 6 });
+      }
+
+      if (connectedPageNumber > 0) {
+        dispatch({ type: "SET_CONNECTED_PAGE", payload: connectedPageNumber + 1 });
+        dispatch({ type: "SET_HAS_MORE_CONNECTED", payload: newConnectedTickets.length >= 6 });
+      }
+
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to fetch tickets",
+        variant: "destructive",
+      });
+      dispatch({ type: "SET_HAS_MORE_DIRECT", payload: false });
+      dispatch({ type: "SET_HAS_MORE_CONNECTED", payload: false });
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
+      dispatch({ type: "SET_INITIAL_LOADING", payload: false });
+      dispatch({ type: "SET_FETCHING_DIRECT", payload: false });
+      dispatch({ type: "SET_FETCHING_CONNECTED", payload: false });
+      setIsLoading(false);
+      fetchingRef.current = false;
+    }
+  },
+  [isSelectingReturn, toast, setIsLoading, validateAndUpdateDates]
+);
 
   const fetchNextAvailableDates = useCallback(async () => {
     const {

@@ -94,8 +94,8 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked {
-  background-color: #ff284d;
-  border-color: #ff007f;
+  background-color: #55aac4;
+  border-color: #55aac4;
 }
 .prose {
   @apply text-gray-700;
@@ -131,7 +131,7 @@ input[type="radio"]:checked {
 }
 
 .prose a {
-  @apply text-[#ff284d] hover:underline font-medium;
+  @apply text-[#55aac4] hover:underline font-medium;
 }
 
 .prose .image-placeholder {
@@ -143,7 +143,7 @@ input[type="radio"]:checked {
 }
 
 .prose .cta-section {
-  @apply mt-12 p-8 bg-gradient-to-r from-[#ff284d]/5 to-orange-50 rounded-2xl text-center;
+  @apply mt-12 p-8 bg-gradient-to-r from-[#55aac4]/5 to-orange-50 rounded-2xl text-center;
 }
 
 .prose .btn {
@@ -151,7 +151,7 @@ input[type="radio"]:checked {
 }
 
 .prose .btn-primary {
-  @apply bg-[#ff284d] text-white hover:bg-[#ff284d]/90;
+  @apply bg-[#55aac4] text-white hover:bg-[#55aac4]/90;
 }
 
 .prose .btn-secondary {

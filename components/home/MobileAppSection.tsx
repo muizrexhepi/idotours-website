@@ -27,72 +27,44 @@ const MobileAppSection = () => {
   ];
 
   return (
-    <div className="bg-[#f9fafb] py-12 sm:py-20 relative overflow-hidden">
-      <div className="relative max-w-6xl mx-auto paddingX">
-        <div className="grid lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left side - Content */}
-
-          {/* Right side - Image */}
-          <div className="relative lg:order-2 flex justify-center lg:justify-start">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-red-200 to-orange-200 rounded-3xl blur-2xl opacity-40"></div>
-              <div className="relative w-full max-w-xl hidden lg:block">
-                <img
-                  src="/assets/images/mobileapp.webp"
-                  alt="GoBusly Mobile App"
-                  className="w-full h-auto drop-shadow-2xl"
-                />
-              </div>
-            </div>
+    <div className="bg-[#f9fafb] py-16 sm:py-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col items-start space-y-10">
+          
+          {/* Header Content */}
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
+              {t("mobileAppSection.title")}
+            </h2>
+            <p className="text-lg text-gray-500 max-w-2xl">
+              {t("mobileAppSection.description")}
+            </p>
           </div>
-          <div className="space-y-8 lg:order-1">
-            <div className="max-w-4xl space-y-2">
-              <h1 className="text-left text-3xl font-normal text-primary">
-                {t("mobileAppSection.title")}
-              </h1>
-              <p className="text-left text-sm sm:text-base text-black/60 max-w-2xl">
-                {t("mobileAppSection.description")}
-              </p>
-            </div>
 
-            {/* Features */}
-            <div className="space-y-3">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-5 p-5 bg-white rounded-2xl transition-shadow shadow-sm"
-                >
-                  <div className="flex-shrink-0 w-12 h-12 bg-primary-accent rounded-xl flex items-center justify-center text-white shadow-lg">
-                    {feature.icon}
-                  </div>
-                  <div className="flex-1 pt-1">
-                    <h3 className="font-normal text-gray-900 mb-1">
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-black/60">
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* App Store Buttons */}
-            {/* <div className="flex flex-wrap gap-4">
-              <a
-                href="https://apps.apple.com/za/app/gobusly/id6753230552"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block transition-all hover:scale-105 hover:-translate-y-1 duration-200"
+          {/* Large Feature Cards */}
+          <div className="w-full space-y-6">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-6 p-8 bg-white rounded-[24px] shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
               >
-                <img
-                  src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1234567890"
-                  alt="Download on the App Store"
-                  className="h-12"
-                />
-              </a>
-            </div> */}
+                {/* Icon Container - Matches the Teal/Blue in your screenshot */}
+                <div className="flex-shrink-0 w-16 h-16 bg-[#5BB1C4] rounded-2xl flex items-center justify-center text-white shadow-sm">
+                  {feature.icon}
+                </div>
+                
+                <div className="flex-1">
+                  <h3 className="text-xl font-medium text-gray-900">
+                    {feature.title}
+                  </h3>
+                  <p className="text-base text-gray-500 mt-1">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
+
         </div>
       </div>
     </div>

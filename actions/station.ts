@@ -5,7 +5,7 @@ import { cache } from "react";
 export const getStationsByOperatorId = cache(async (operator_id: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/station/operator/${operator_id}?select=_id name city country`
+      `${process.env.NEXT_PUBLIC_API_URL}/station/operator/${process.env.NEXT_PUBLIC_OPERATOR_ID}?select=_id name city country`
     );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);

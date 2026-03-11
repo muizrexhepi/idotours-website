@@ -33,13 +33,13 @@ const config: Config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          bg: "#15203e",
-          accent: "#f43f5e",
+          bg: "#1a2b4b", /* Updated to match the Deep Navy from the logo */
+          accent: "#55aac4", /* Replaced the old red with the Cyan accent */
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
-          bg: "#55aac4",
+          bg: "#55aac4", /* Kept the Cyan */
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -95,4 +95,5 @@ const config: Config = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
 export default config;

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import SecondaryFooter from "@/components/SecondaryFooter";
 import SearchSection from "../_components/SearchSection";
 import SearchedTickets from "../_components/SearchedTickets";

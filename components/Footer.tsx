@@ -35,7 +35,7 @@ const FOOTER_LINKS = [
 ];
 
 const CONTACT_INFO = {
-  email: "contact@gobusly.com",
+  email: "info@idotours.com.mk",
   phone1: "+389 76 224 065",
   phone2: "+389 70 250 259",
 };
@@ -69,7 +69,7 @@ const Footer = () => {
             <div className="lg:col-span-5 space-y-6">
               <Link href="/" className="inline-block">
                 <Image
-                  src="/assets/icons/dark-logo.svg"
+                  src="/logo.png"
                   alt="GoBusly Logo"
                   width={140}
                   height={40}

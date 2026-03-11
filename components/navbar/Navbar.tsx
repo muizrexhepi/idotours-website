@@ -36,7 +36,7 @@ const Navbar = ({ className }: { className?: string }) => {
       <div className="flex items-center gap-12">
         <Link href={"/"} className="flex-shrink-0">
           <Image
-            src={"/assets/icons/dark-logo.svg"}
+            src={"/logo.png"}
             alt="Logo"
             width={140}
             height={60}
