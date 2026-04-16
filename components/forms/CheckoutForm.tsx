@@ -9,7 +9,7 @@ import OrderSummary from "@/app/checkout/_components/OrderSummary";
 import LoginCTA from "@/app/checkout/_components/LoginCTA";
 
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
 );
 
 const CheckoutForm = () => {
@@ -19,7 +19,7 @@ const CheckoutForm = () => {
         <div className="flex-[2] flex flex-col gap-4">
           <LoginCTA />
           <PassengerInfo />
-          <Extras />
+          {/* <Extras /> */}
           <PaymentMethod />
         </div>
 

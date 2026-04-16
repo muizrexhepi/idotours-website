@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import type { PassengerData } from "@/components/hooks/use-passengers";
 import useSearchStore, { useCheckoutStore } from "@/store";
 import PassengerSelector from "./PassengerSelector";
-import { CalendarIcon, X } from "lucide-react";
+import { CalendarIcon, Trash2, User, Users, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/components/providers/auth-provider";
 import {
@@ -143,12 +143,13 @@ const PassengerInfo: React.FC = () => {
     setPassengers: state.setPassengers,
   }));
   const [validationErrors, setValidationErrors] = useState<ValidationErrors[]>(
-    []
+    [],
   );
   const [useUserInfo, setUseUserInfo] = useState(false);
   const { passengers: passengersAmount, setPassengers: setPassengersAmount } =
     useSearchStore();
   const { user } = useAuth();
+
   const { adults, children, totalPassengers } = useMemo(() => {
     const adults = Math.max(1, passengersAmount.adults || 1);
     const children = Math.max(0, passengersAmount.children || 0);
@@ -168,7 +169,6 @@ const PassengerInfo: React.FC = () => {
           first_name: "",
           last_name: "",
           email: "",
-          // 1. Default to "+"
           phone: "+",
           countryCode: "",
           birthdate: "",
@@ -180,7 +180,6 @@ const PassengerInfo: React.FC = () => {
           return {
             ...basePassenger,
             ...existingPassenger,
-            // Ensure existing passengers have at least a +
             phone: existingPassenger.phone || "+",
           };
         }
@@ -200,7 +199,7 @@ const PassengerInfo: React.FC = () => {
         return basePassenger;
       });
     },
-    [adults, passengers, user, useUserInfo]
+    [adults, passengers, user, useUserInfo],
   );
 
   useEffect(() => {
@@ -280,7 +279,7 @@ const PassengerInfo: React.FC = () => {
 
       setPassengers(updatedPassengers);
     },
-    [passengers, setPassengers]
+    [passengers, setPassengers],
   );
 
   const validatePassenger = useCallback(
@@ -295,8 +294,8 @@ const PassengerInfo: React.FC = () => {
         case "last_name":
           if (!passengerData[field] || passengerData[field].trim().length < 2) {
             errorMessage = t(
-              `validation.${{ field }}Required`,
-              `${field.replace("_", " ")} is required`
+              `validation.${field}Required`,
+              `${field.replace("_", " ")} is required`,
             );
           }
           break;
@@ -305,17 +304,15 @@ const PassengerInfo: React.FC = () => {
           if (!passengerData[field] || !emailRegex.test(passengerData[field])) {
             errorMessage = t(
               "validation.emailInvalid",
-              "Please enter a valid email address"
+              "Please enter a valid email address",
             );
           }
           break;
         case "phone":
-          // Only check if length is less than 8 (considering the + takes 1 char)
-          // So essentially roughly 7 digits
           if (!passengerData[field] || passengerData[field].length < 8) {
             errorMessage = t(
               "validation.phoneInvalid",
-              "Please enter a valid phone number"
+              "Please enter a valid phone number",
             );
           }
           break;
@@ -323,7 +320,7 @@ const PassengerInfo: React.FC = () => {
           if (!passengerData[field]) {
             errorMessage = t(
               "validation.birthdateRequired",
-              "Birthdate is required"
+              "Birthdate is required",
             );
           } else {
             const birthDate = new Date(passengerData[field]);
@@ -331,7 +328,7 @@ const PassengerInfo: React.FC = () => {
             if (birthDate >= now) {
               errorMessage = t(
                 "validation.birthdateInvalid",
-                "Please enter a valid birthdate"
+                "Please enter a valid birthdate",
               );
             }
           }
@@ -349,7 +346,7 @@ const PassengerInfo: React.FC = () => {
         return newErrors;
       });
     },
-    [passengers, t]
+    [passengers, t],
   );
 
   const removePassenger = useCallback(
@@ -360,24 +357,18 @@ const PassengerInfo: React.FC = () => {
         setPassengersAmount({ children, adults: Math.max(1, adults - 1) });
       }
     },
-    [adults, children, setPassengersAmount]
+    [adults, children, setPassengersAmount],
   );
 
-  // 2. Strict filter to allow only numbers and ensure '+' stays at start
   const handlePhoneChange = (index: number, value: string) => {
-    // Remove any character that is NOT a digit or a +
     let cleaned = value.replace(/[^0-9+]/g, "");
 
-    // If the user somehow deleted the +, put it back at the start
     if (!cleaned.startsWith("+")) {
-      // If they typed "389...", convert to "+389..."
       cleaned = "+" + cleaned.replace(/\+/g, "");
     } else {
-      // Keep the first +, remove any others that might have been pasted in middle
       cleaned = "+" + cleaned.slice(1).replace(/\+/g, "");
     }
 
-    // If somehow it becomes empty (e.g. select all + delete), reset to "+"
     if (cleaned === "") {
       cleaned = "+";
     }
@@ -392,16 +383,24 @@ const PassengerInfo: React.FC = () => {
     if (!passenger) return null;
 
     return (
-      <div key={`passenger-${index}`}>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <p className="font-medium text-black">
+      <div
+        key={`passenger-${index}`}
+        className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 transition-all hover:border-blue-200 hover:shadow-sm"
+      >
+        {/* Passenger Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5 pb-4 border-b border-gray-100">
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Passenger Badge */}
+            <span className="flex items-center gap-2 bg-blue-50 text-blue-700 font-semibold px-3 py-1.5 rounded-lg text-sm">
+              <User className="w-4 h-4" />
               {isChild
-                ? `${t("passengerInfo.child")} ${index - adults + 1}`
-                : `${t("passengerInfo.adult")} ${index + 1}`}
-            </p>
+                ? `${t("passengerInfo.child", "Child")} ${index - adults + 1}`
+                : `${t("passengerInfo.adult", "Adult")} ${index + 1}`}
+            </span>
+
+            {/* Toggle Switch for Primary User */}
             {index === 0 && user && (
-              <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-1">
+              <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5">
                 <Switch
                   id="use-user-info"
                   checked={useUserInfo}
@@ -409,24 +408,30 @@ const PassengerInfo: React.FC = () => {
                 />
                 <label
                   htmlFor="use-user-info"
-                  className="text-sm text-gray-600 cursor-pointer"
+                  className="text-sm font-medium text-gray-700 cursor-pointer select-none"
                 >
-                  {t("passengerInfo.useMyInfo", "Use my info")}
+                  {t("passengerInfo.useMyInfo", "Autofill my info")}
                 </label>
               </div>
             )}
           </div>
+
+          {/* Remove Button */}
           {index !== 0 && (
             <button
               onClick={() => removePassenger(index, isChild)}
-              className="bg-gray-100 p-1.5 rounded-full hover:bg-gray-200 transition-colors"
+              className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors"
             >
-              <X size={16} className="text-neutral-700" />
+              <Trash2 className="w-4 h-4" />
+              <span className="hidden sm:inline">
+                {t("actions.remove", "Remove")}
+              </span>
             </button>
           )}
         </div>
 
-        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2">
+        {/* Input Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <InputField
             label={t("passengerInfo.firstName")}
             placeholder={t("passengerInfo.firstNamePlaceholder")}
@@ -466,7 +471,7 @@ const PassengerInfo: React.FC = () => {
                 label={t("passengerInfo.phoneNumber")}
                 placeholder="+389 70 123 456"
                 type="tel"
-                inputMode="numeric" // 3. Show numeric keypad on mobile
+                inputMode="numeric"
                 value={passenger.phone}
                 onBlur={() => validatePassenger(index, "phone")}
                 onChange={(value) => handlePhoneChange(index, value)}
@@ -494,55 +499,73 @@ const PassengerInfo: React.FC = () => {
   };
 
   if (passengers.length !== totalPassengers) {
-    // ... (Loading skeleton code same as before)
     return (
-      <div className="flex flex-col bg-white rounded-xl p-4 gap-2">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center justify-center w-8 h-8 bg-secondary-bg/20 text-primary-bg rounded-full font-semibold">
-            1
-          </span>
-          <p className="text-[#353535] font-medium text-lg">
-            {t("passengerInfo.title")}
-          </p>
-        </div>
-        <div className="animate-pulse">
-          <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-          <div className="space-y-4">
-            {Array.from({ length: totalPassengers }).map((_, i) => (
-              <div key={i} className="space-y-3">
-                <div className="h-6 bg-gray-200 rounded w-1/4"></div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="h-12 bg-gray-200 rounded"></div>
-                  <div className="h-12 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-            ))}
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
+        <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
+          <div className="p-2 bg-gray-100 rounded-lg">
+            <Users className="w-5 h-5 text-gray-500" />
           </div>
+          <h2 className="text-xl font-bold text-gray-900">
+            {t("passengerInfo.title")}
+          </h2>
+        </div>
+
+        {/* Skeleton Loader */}
+        <div className="animate-pulse space-y-6">
+          {Array.from({ length: totalPassengers }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-gray-50 border border-gray-100 rounded-xl p-6"
+            >
+              <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="h-12 bg-gray-200 rounded"></div>
+                <div className="h-12 bg-gray-200 rounded"></div>
+                {i === 0 && (
+                  <>
+                    <div className="h-12 bg-gray-200 rounded"></div>
+                    <div className="h-12 bg-gray-200 rounded"></div>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col bg-white rounded-xl p-4 gap-4">
-      {/* ... Header ... */}
-      <div className="flex items-center gap-4">
-        <span className="flex items-center justify-center w-8 h-8 bg-secondary-bg/20 text-primary-bg rounded-full font-semibold">
-          1
-        </span>
-        <p className="text-[#353535] font-medium text-lg">
-          {t("passengerInfo.title")}
+    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
+      {/* Main Header */}
+      <div className="flex flex-col border-b border-gray-100 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-50 rounded-lg">
+            <Users className="w-5 h-5 text-blue-600" />
+          </div>
+          <h2 className="text-xl font-bold text-gray-900">
+            {t("passengerInfo.title", "Passenger Details")}
+          </h2>
+        </div>
+        <p className="text-sm text-gray-500 mt-2 ml-12">
+          {t(
+            "passengerInfo.instructions",
+            "Please enter the details exactly as they appear on your ID or Passport.",
+          )}
         </p>
       </div>
-      <p className="text-sm text-gray-600">{t("passengerInfo.instructions")}</p>
 
-      <div className="space-y-6">
+      {/* Passenger Forms */}
+      <div className="space-y-4">
         {passengers.map((_, index) =>
-          renderPassengerInputs(index, index >= adults)
+          renderPassengerInputs(index, index >= adults),
         )}
       </div>
 
-      <PassengerSelector />
+      {/* Add More Passengers Selector */}
+      <div className="pt-2">
+        <PassengerSelector />
+      </div>
     </div>
   );
 };

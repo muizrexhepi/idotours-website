@@ -5,14 +5,14 @@ import HeroWrapper from "@/components/hero-wrapper";
 
 const AffiliateTracker = dynamic(
   () => import("@/components/affiliate-tracker"),
-  { ssr: false }
+  { ssr: false },
 );
 
 const MobileAppBanner = dynamic(
   () => import("@/components/mobile/mobile-banner"),
   {
     ssr: false,
-  }
+  },
 );
 
 import PopularBusRoutes from "@/components/home/PopularRoutes";
@@ -29,8 +29,8 @@ export default function Home() {
       <HeroWrapper />
 
       <main>
-        <MobileAppSection />
         <FeaturesSection />
+        <MobileAppSection />
       </main>
 
       <Footer />

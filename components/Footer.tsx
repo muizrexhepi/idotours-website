@@ -4,7 +4,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Phone, Mail } from "lucide-react";
 
 const FOOTER_LINKS = [
   {
@@ -13,14 +13,6 @@ const FOOTER_LINKS = [
       { name: "Contact", link: "/help/contact-support" },
       { name: "FAQ", link: "/help/faq" },
       { name: "Help", link: "/help" },
-    ],
-  },
-  {
-    title: "Partners",
-    links: [
-      { name: "Partner Application", link: "/partners/apply" },
-      { name: "Become a Partner", link: "/partners/overview" },
-      { name: "Affiliate Program", link: "/affiliate-program" },
     ],
   },
   {
@@ -42,10 +34,14 @@ const CONTACT_INFO = {
 
 const SOCIAL_LINKS = [
   { icon: Facebook, link: "https://facebook.com", name: "Facebook" },
-  { icon: Instagram, link: "https://instagram.com/gobusly", name: "Instagram" },
   {
     icon: Instagram,
-    link: "https://www.tiktok.com/@gobusly?lang=en",
+    link: "https://instagram.com/idotours",
+    name: "Instagram",
+  },
+  {
+    icon: Instagram, // Consider importing a TikTok icon if available in your icon library
+    link: "https://www.tiktok.com/@idotours?lang=en",
     name: "Tiktok",
   },
 ];
@@ -60,144 +56,28 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <footer className="w-full bg-white border-t border-gray-200">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-16 sm:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-            {/* Brand Section */}
-            <div className="lg:col-span-5 space-y-6">
-              <Link href="/" className="inline-block">
-                <Image
-                  src="/logo.png"
-                  alt="GoBusly Logo"
-                  width={140}
-                  height={40}
-                  className="h-8 w-auto"
-                  priority
-                />
-              </Link>
-              <p className="text-sm text-gray-600 leading-relaxed max-w-sm">
-                {t("footer.missionStatement")}
-              </p>
+    <footer className="w-full bg-slate-900 text-slate-300">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Top Section - 4 Column Layout */}
+        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand & Mission */}
+          <div className="space-y-6">
+            <Link href="/" className="inline-block bg-white p-2 rounded-lg">
+              <Image
+                src="/logo.png"
+                alt="IDoTours Logo"
+                width={140}
+                height={40}
+                className="h-8 w-auto"
+                priority
+              />
+            </Link>
+            <p className="text-sm leading-relaxed text-slate-400">
+              {t("footer.missionStatement")}
+            </p>
 
-              {/* App Store Buttons */}
-              <div className="space-y-4 pt-2">
-                <p className="text-xs font-medium text-gray-900 uppercase tracking-wide">
-                  {t("footer.downloadApp")}
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href="https://apps.apple.com/za/app/gobusly/id6753230552"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block transition-opacity hover:opacity-70"
-                  >
-                    <img
-                      src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1234567890"
-                      alt="Download on the App Store"
-                      className="h-10"
-                    />
-                  </a>
-                </div>
-              </div>
-
-              {/* Payment Methods */}
-              <div className="pt-4">
-                <p className="text-xs font-medium text-gray-900 mb-3 uppercase tracking-wide">
-                  {t("footer.paymentMethods")}
-                </p>
-                <div className="flex items-center gap-4">
-                  {PAYMENT_METHODS.map((method) => (
-                    <div
-                      key={method.name}
-                      className="grayscale opacity-50 hover:opacity-75 transition-opacity"
-                    >
-                      <Image
-                        src={method.path}
-                        alt={`${method.name} Logo`}
-                        width={method.name === "Stripe" ? 45 : 36}
-                        height={method.name === "Stripe" ? 45 : 36}
-                        className="object-contain"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Links Sections */}
-            <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-8 lg:gap-12">
-              {FOOTER_LINKS.map((section) => (
-                <div key={section.title}>
-                  <h3 className="text-xs font-semibold text-gray-900 mb-4 uppercase tracking-wide">
-                    {t(`footer.sections.${section.title.toLowerCase()}`)}
-                  </h3>
-                  <ul className="space-y-3">
-                    {section.links.map((link) => (
-                      <li key={link.name}>
-                        <Link
-                          href={link.link}
-                          target={
-                            link.link.includes("support.gobusly.com")
-                              ? "_blank"
-                              : undefined
-                          }
-                          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                        >
-                          {t(
-                            `footer.links.${link.name
-                              .toLowerCase()
-                              .replace(/\s+/g, "")}`,
-                          )}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
-              {/* Contact Section */}
-              <div>
-                <h3 className="text-xs font-semibold text-gray-900 mb-4 uppercase tracking-wide">
-                  {t("footer.contact")}
-                </h3>
-                <ul className="space-y-3">
-                  <li>
-                    <a
-                      href={`mailto:${CONTACT_INFO.email}`}
-                      className="text-sm text-gray-600 hover:text-gray-900 transition-colors block"
-                    >
-                      {CONTACT_INFO.email}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={`tel:${CONTACT_INFO.phone1}`}
-                      className="text-sm text-gray-600 hover:text-gray-900 transition-colors block"
-                    >
-                      {CONTACT_INFO.phone1}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={`tel:${CONTACT_INFO.phone2}`}
-                      className="text-sm text-gray-600 hover:text-gray-900 transition-colors block"
-                    >
-                      {CONTACT_INFO.phone2}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-200 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-gray-500">{t("footer.copyright")}</p>
-            <div className="flex items-center gap-5">
+            {/* Socials moved to brand column for a modern look */}
+            <div className="flex items-center gap-4 pt-2">
               {SOCIAL_LINKS.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -206,7 +86,7 @@ const Footer = () => {
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
+                    className="p-2 rounded-full bg-slate-800 text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300"
                     aria-label={social.name}
                   >
                     <Icon className="w-5 h-5" />
@@ -215,6 +95,113 @@ const Footer = () => {
               })}
             </div>
           </div>
+
+          {/* Dynamic Link Sections */}
+          {FOOTER_LINKS.map((section) => (
+            <div key={section.title}>
+              <h3 className="text-white font-semibold mb-6 tracking-wide">
+                {t(`footer.sections.${section.title.toLowerCase()}`)}
+              </h3>
+              <ul className="space-y-4">
+                {section.links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.link}
+                      target={
+                        link.link.includes("support.idotours.com.mk")
+                          ? "_blank"
+                          : undefined
+                      }
+                      className="text-sm hover:text-blue-400 hover:translate-x-1 inline-block transition-all duration-200"
+                    >
+                      {t(
+                        `footer.links.${link.name
+                          .toLowerCase()
+                          .replace(/\s+/g, "")}`,
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* Contact & Payments */}
+          <div>
+            <h3 className="text-white font-semibold mb-6 tracking-wide">
+              {t("footer.contact")}
+            </h3>
+            <ul className="space-y-4 mb-8">
+              <li>
+                <a
+                  href={`mailto:${CONTACT_INFO.email}`}
+                  className="flex items-center gap-3 text-sm hover:text-blue-400 transition-colors"
+                >
+                  <Mail className="w-4 h-4 text-blue-500" />
+                  {CONTACT_INFO.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`tel:${CONTACT_INFO.phone1}`}
+                  className="flex items-center gap-3 text-sm hover:text-blue-400 transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-blue-500" />
+                  {CONTACT_INFO.phone1}
+                </a>
+              </li>
+              {/* <li>
+                <a
+                  href={`tel:${CONTACT_INFO.phone2}`}
+                  className="flex items-center gap-3 text-sm hover:text-blue-400 transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-transparent" />{" "}
+                  {CONTACT_INFO.phone2}
+                </a>
+              </li> */}
+            </ul>
+
+            {/* Payment Methods */}
+            <div>
+              <p className="text-xs font-medium text-slate-500 mb-4 uppercase tracking-wider">
+                {t("footer.paymentMethods")}
+              </p>
+              <div className="flex items-center gap-3 bg-slate-800 w-fit p-2 rounded-xl">
+                {PAYMENT_METHODS.map((method) => (
+                  <div
+                    key={method.name}
+                    className="opacity-70 hover:opacity-100 transition-opacity bg-white rounded p-1"
+                  >
+                    <Image
+                      src={method.path}
+                      alt={`${method.name} Logo`}
+                      width={method.name === "Stripe" ? 35 : 28}
+                      height={method.name === "Stripe" ? 35 : 28}
+                      className="object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-slate-800 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500 text-center md:text-left">
+            &copy; {new Date().getFullYear()} IdoTours
+          </p>
+          <p className="text-xs text-slate-500 text-center md:text-right">
+            Maintained by{" "}
+            <a
+              href="https://casevia.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-400 hover:text-blue-400 transition-colors"
+            >
+              Casevia.io
+            </a>
+          </p>
         </div>
       </div>
     </footer>

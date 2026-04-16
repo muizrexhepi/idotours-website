@@ -285,8 +285,8 @@ const PaymentMethod = () => {
       const firstErrorId = errors.cardNumber
         ? "card-number-element"
         : errors.cardExpiry
-        ? "card-expiry-element"
-        : "card-cvc-element";
+          ? "card-expiry-element"
+          : "card-cvc-element";
 
       const el = document.getElementById(firstErrorId);
       if (el) {
@@ -303,7 +303,7 @@ const PaymentMethod = () => {
     }
 
     const hasErrors = Object.values(cardValidationErrors).some(
-      (error) => error
+      (error) => error,
     );
     if (hasErrors) {
       toast({
@@ -342,7 +342,7 @@ const PaymentMethod = () => {
       const { error, paymentIntent } = await stripe!.confirmCardPayment(
         clientSecret,
         { payment_method: event.paymentMethod.id },
-        { handleActions: false }
+        { handleActions: false },
       );
 
       if (error) {
@@ -357,7 +357,7 @@ const PaymentMethod = () => {
           paymentIntent.id,
           finalAmount,
           discountResult?.amount ?? 0,
-          discountResult?.code ?? null
+          discountResult?.code ?? null,
         );
       }
     } catch (error: any) {
@@ -425,7 +425,7 @@ const PaymentMethod = () => {
           paymentResponse.data.id,
           finalAmount,
           appliedDiscountAmount,
-          discountCode
+          discountCode,
         );
         return;
       }
@@ -450,7 +450,7 @@ const PaymentMethod = () => {
           paymentIntent.id,
           finalAmount,
           appliedDiscountAmount,
-          discountCode
+          discountCode,
         );
       } else {
         throw new Error(`Unexpected payment status: ${paymentIntent.status}`);
@@ -472,7 +472,7 @@ const PaymentMethod = () => {
     paymentIntentId: string,
     finalAmount: number,
     discountAmount = 0,
-    discountCode: string | null = null
+    discountCode: string | null = null,
   ) => {
     try {
       // Transform passengers before sending to booking
@@ -546,9 +546,6 @@ const PaymentMethod = () => {
       <div className="bg-white rounded-xl overflow-hidden">
         <div className="p-4">
           <div className="flex items-center gap-4">
-            <span className="flex items-center justify-center w-8 h-8 bg-secondary-bg/20 text-primary-bg rounded-full font-semibold">
-              3
-            </span>
             <p className="text-[#353535] font-medium text-lg ">
               {t("paymentMethod.title")}
             </p>

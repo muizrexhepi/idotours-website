@@ -51,7 +51,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
     location: { lat?: number; lng?: number },
     name: string,
     city: string,
-    address: string
+    address: string,
   ) => {
     if (!location || !location.lat || !location.lng) {
       return toast({
@@ -97,7 +97,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                 <p className="text-xs text-red-600 mt-1">
                   {t(
                     "ticket.notBookableDescription",
-                    "This route is currently not available for online booking."
+                    "This route is currently not available for online booking.",
                   )}
                 </p>
               </div>
@@ -115,7 +115,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                 firstStop?.from?.location,
                 firstStop.from.name,
                 firstStop.from.city,
-                firstStop.from.address
+                firstStop.from.address,
               )
             }
           >
@@ -137,7 +137,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                 lastStop?.to?.location,
                 lastStop.to.name,
                 lastStop.to.city,
-                lastStop.to.address
+                lastStop.to.address,
               )
             }
           >
@@ -194,7 +194,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                       firstStop?.from?.location,
                       firstStop.from.name,
                       firstStop.from.city,
-                      firstStop.from.address
+                      firstStop.from.address,
                     )
                   }
                 >
@@ -227,7 +227,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                       lastStop?.to?.location,
                       lastStop.to.name,
                       lastStop.to.city,
-                      lastStop.to.address
+                      lastStop.to.address,
                     )
                   }
                 >
@@ -257,7 +257,7 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                       const duration = moment.duration(
                         moment
                           .utc(ticket.stops[1].departure_date)
-                          .diff(moment.utc(ticket.stops[0].arrival_time))
+                          .diff(moment.utc(ticket.stops[0].arrival_time)),
                       );
                       const hours = Math.floor(duration.asHours());
                       const minutes = duration.minutes();
@@ -290,19 +290,19 @@ export default function TicketDetails({ ticket }: { ticket: Ticket }) {
                 {feature === "ac/heating"
                   ? t(`ticketDetails.features.acHeating`)
                   : feature === "usb charging ports"
-                  ? t("ticketDetails.features.usbChargingPorts")
-                  : feature}
+                    ? t("ticketDetails.features.usbChargingPorts")
+                    : feature}
               </span>
             </div>
           ))}
         </div>
 
         {/* Operator Info */}
-        <InfoBlock
+        {/* <InfoBlock
           desc={t("ticketDetails.operatedBy")}
           title={ticket?.operatorInfo?.name}
           href={ticket?.operatorInfo?._id}
-        />
+        /> */}
       </div>
 
       {/* Location Map Modal */}
