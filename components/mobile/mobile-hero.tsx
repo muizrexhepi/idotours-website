@@ -10,7 +10,7 @@ const SearchForm = dynamic(
   {
     ssr: false,
     loading: () => <SearchFormSkeleton />,
-  }
+  },
 );
 
 const MobileHero = () => {
@@ -20,7 +20,7 @@ const MobileHero = () => {
     <>
       <div className="relative flex flex-col justify-between md:pb-20 bg-[#f9fafb] md:hidden">
         <div className="relative z-20 w-full">
-          <div className="w-full relative aspect-[4/3] h-48">
+          {/* <div className="w-full relative aspect-[4/3] h-48">
             <Image
               src="/assets/images/bgmobile.webp"
               fill
@@ -37,7 +37,7 @@ const MobileHero = () => {
                 {t("hero.title")}
               </h1>
             </div>
-          </div>
+          </div> */}
 
           <div className="p-4">
             <SearchForm />
