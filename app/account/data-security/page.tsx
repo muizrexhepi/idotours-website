@@ -70,7 +70,7 @@ export default function DataAndSecurity() {
           headers: {
             Authorization: `Bearer ${user?.token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -141,7 +141,7 @@ export default function DataAndSecurity() {
             currentPassword,
             newPassword,
           }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -380,7 +380,7 @@ export default function DataAndSecurity() {
                 href="/help"
                 className="text-transparent bg-clip-text text-sm button-gradient hover:underline"
               >
-                support.gobusly.com
+                idotours.com.mk
               </a>
             </p>
           </div>

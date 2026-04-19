@@ -38,11 +38,6 @@ const sidebarLinks = [
   //   href: "/account/discount-codes",
   //   icon: FaTicketAlt,
   // },
-  {
-    labelKey: "sidebar.notifications", // Updated for translation
-    href: "/account/notifications",
-    icon: FaBell,
-  },
 ];
 
 export function AccountSidebar() {
@@ -61,7 +56,7 @@ export function AccountSidebar() {
                 className={cn(
                   "flex items-center text-primary-bg gap-3 p-4 text-sm transition-colors",
                   "hover:bg-accent",
-                  isActive ? "font-semibold" : "font-normal"
+                  isActive ? "font-semibold" : "font-normal",
                 )}
               >
                 <link.icon className="h-4 w-4" />

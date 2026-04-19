@@ -73,35 +73,9 @@ const UserNavbarMenu = () => {
       label: t("dataAndSecurity.title"),
     },
     {
-      label: "Notifications",
-      href: "/account/notifications",
-      icon: FaBell,
-    },
-    {
-      href: "/bus",
-      icon: FaBus,
-      label: t("nav.busdestinations"),
-    },
-    {
-      href: "/bus-operators",
-      icon: FaAlignCenter,
-      label: t("nav.busoperators"),
-    },
-    // {
-    //   label: "Discount codes",
-    //   href: "/account/discount-codes",
-    //   icon: FaTicketAlt,
-    // },
-
-    {
       label: t("footer.links.customersupport"),
       href: "/help",
       icon: FaHeadphones,
-    },
-    {
-      label: t("nav.contact"),
-      href: "/help/contact-support",
-      icon: IoMdContact,
     },
   ];
 
@@ -151,7 +125,7 @@ const UserNavbarMenu = () => {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 transition-colors",
                 "hover:bg-gray-100",
-                pathname === link.href ? "bg-gray-100 font-medium" : ""
+                pathname === link.href ? "bg-gray-100 font-medium" : "",
               )}
               onClick={() => setIsOpen(false)}
             >

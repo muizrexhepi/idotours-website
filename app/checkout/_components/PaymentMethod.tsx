@@ -433,7 +433,7 @@ const PaymentMethod = () => {
       const { clientSecret } = paymentResponse.data;
 
       setLoading("confirming-payment");
-
+      console.log({ paymentres: paymentResponse.data });
       const { error: confirmError, paymentIntent } =
         await stripe.confirmCardPayment(clientSecret, {
           payment_method: {

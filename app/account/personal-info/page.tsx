@@ -57,7 +57,7 @@ export default function PersonalInfo() {
                 Authorization: `Bearer ${user?.token}`,
               },
               body: JSON.stringify({ name: newValue }),
-            }
+            },
           );
 
           if (!res.ok) throw new Error("Failed to update name");
@@ -92,7 +92,7 @@ export default function PersonalInfo() {
                 Authorization: `Bearer ${user?.token}`,
               },
               body: JSON.stringify({ phone: newValue }),
-            }
+            },
           );
 
           if (!res.ok) throw new Error("Failed to update phone number");
@@ -106,8 +106,6 @@ export default function PersonalInfo() {
       },
     },
   ];
-
-
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedValue(e.target.value);
@@ -130,7 +128,9 @@ export default function PersonalInfo() {
     console.log({ user });
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/delete/${user?._id}`);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/delete/${user?._id}`,
+      );
 
       if (response.data.message !== "User account deleted successfully.") {
         return;
@@ -140,8 +140,9 @@ export default function PersonalInfo() {
     } catch (error: any) {
       console.log({ error });
       toast({
-        description: error?.response.data.message || t("personalInfo.deleteError"),
-        variant: "destructive"
+        description:
+          error?.response.data.message || t("personalInfo.deleteError"),
+        variant: "destructive",
       });
     } finally {
       setIsDeleting(false);
@@ -153,7 +154,9 @@ export default function PersonalInfo() {
     <>
       <div className="container max-w-3xl mx-auto">
         <div className="space-y-8">
-          <h1 className="text-3xl font-medium mb-4">{t("personalInfo.title")}</h1>
+          <h1 className="text-3xl font-medium mb-4">
+            {t("personalInfo.title")}
+          </h1>
 
           <div className="space-y-6">
             <div className="">
@@ -226,7 +229,10 @@ export default function PersonalInfo() {
             <h2 className="text-xl font-medium">
               {t("personalInfo.deleteAccount")}
             </h2>
-            <Button variant={"primary"} onClick={() => setShowDeleteDialog(true)}>
+            <Button
+              variant={"primary"}
+              onClick={() => setShowDeleteDialog(true)}
+            >
               {t("personalInfo.deleteAccount")}
             </Button>
             <div className="space-y-2">
@@ -239,13 +245,13 @@ export default function PersonalInfo() {
                   href="/help"
                   className="text-transparent bg-clip-text text-sm button-gradient hover:underline"
                 >
-                  support.gobusly.com
+                  idotours.com.mk
                 </a>
               </p>
             </div>
           </div>
         </div>
-      </div >
+      </div>
 
       <Dialog
         open={editingInfo !== null}
@@ -293,15 +299,26 @@ export default function PersonalInfo() {
           <DialogHeader>
             <DialogTitle>{t("personalInfo.deleteAccount")}</DialogTitle>
             <DialogDescription>
-              {t("personalInfo.deleteConfirmation") || "Are you sure you want to delete your account? This action cannot be undone."}
+              {t("personalInfo.deleteConfirmation") ||
+                "Are you sure you want to delete your account? This action cannot be undone."}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2">
-            <Button variant="outline" onClick={() => setShowDeleteDialog(false)} disabled={isDeleting}>
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+              disabled={isDeleting}
+            >
               {t("personalInfo.cancel")}
             </Button>
-            <Button variant="destructive" onClick={handleDelete} disabled={isDeleting}>
-              {isDeleting ? t("personalInfo.deleting") || "Deleting..." : t("personalInfo.deleteAccount")}
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting
+                ? t("personalInfo.deleting") || "Deleting..."
+                : t("personalInfo.deleteAccount")}
             </Button>
           </DialogFooter>
         </DialogContent>

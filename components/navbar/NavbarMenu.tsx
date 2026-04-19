@@ -47,28 +47,28 @@ const NavbarMenu = () => {
     setIsOpen(false);
   };
 
-  const navigationLinks = [
-    {
-      label: t("nav.bus"),
-      href: "/bus",
-      icon: FaBus,
-    },
-    {
-      label: t("nav.routes"),
-      href: "/routes",
-      icon: FaRoute,
-    },
-    {
-      label: t("footer.links.customersupport"),
-      href: "/help",
-      icon: BiSupport,
-    },
-    {
-      label: t("nav.contact"),
-      href: "/help/contact-support",
-      icon: IoMdContact,
-    },
-  ];
+  // const navigationLinks = [
+  //   {
+  //     label: t("nav.bus"),
+  //     href: "/bus",
+  //     icon: FaBus,
+  //   },
+  //   {
+  //     label: t("nav.routes"),
+  //     href: "/routes",
+  //     icon: FaRoute,
+  //   },
+  //   {
+  //     label: t("footer.links.customersupport"),
+  //     href: "/help",
+  //     icon: BiSupport,
+  //   },
+  //   {
+  //     label: t("nav.contact"),
+  //     href: "/help/contact-support",
+  //     icon: IoMdContact,
+  //   },
+  // ];
 
   // Reverted to a fixed, clean button style
   const MenuTrigger = (
@@ -115,7 +115,7 @@ const NavbarMenu = () => {
 
       {/* Navigation Links - Cleaned up to match UserNavbarMenu padding/style */}
       <div className="flex-1 overflow-y-auto py-2">
-        {navigationLinks.map((link) => (
+        {/* {navigationLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
@@ -131,7 +131,7 @@ const NavbarMenu = () => {
             </div>
             <ChevronRight className="h-4 w-4 text-gray-300" />
           </Link>
-        ))}
+        ))} */}
       </div>
 
       {/* Footer (Legal & Info) */}
@@ -167,7 +167,7 @@ const NavbarMenu = () => {
           </Link>
         </div>
         <div className="mt-4 pt-4 border-t border-gray-200 text-center">
-          <p className="text-xs text-gray-400">© 2025 GoBusly</p>
+          <p className="text-xs text-gray-400">© 2025 Ido Tours</p>
         </div>
       </div>
     </div>
@@ -194,7 +194,7 @@ const NavbarMenu = () => {
 
       <DropdownMenuSeparator />
 
-      <div className="py-2">
+      {/* <div className="py-2">
         {navigationLinks.map((link) => (
           <DropdownMenuItem
             key={link.href}
@@ -207,7 +207,7 @@ const NavbarMenu = () => {
             </Link>
           </DropdownMenuItem>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 

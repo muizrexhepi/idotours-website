@@ -27,27 +27,31 @@ import { enUS, fr, es, de, mk, it, sq } from "date-fns/locale";
 
 export const NAV_LINKS = [
   {
+    name: "Home",
+    url: "/",
+  },
+  {
     name: "Help",
     url: "/help",
   },
-  {
-    name: "Routes",
-    url: "/routes",
-  },
-  {
-    name: "Bus",
-    url: "/bus",
-    dropdown: [
-      {
-        name: "BusDestinations",
-        url: "/bus",
-      },
-      {
-        name: "BusOperators",
-        url: "/bus-operators",
-      },
-    ],
-  },
+  // {
+  //   name: "About",
+  //   url: "/about",
+  // },
+  // {
+  //   name: "Bus",
+  //   url: "/bus",
+  //   dropdown: [
+  //     {
+  //       name: "BusDestinations",
+  //       url: "/bus",
+  //     },
+  //     {
+  //       name: "BusOperators",
+  //       url: "/bus-operators",
+  //     },
+  //   ],
+  // },
 ];
 
 export const LOCALE_MAP = {

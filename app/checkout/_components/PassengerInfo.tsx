@@ -383,24 +383,16 @@ const PassengerInfo: React.FC = () => {
     if (!passenger) return null;
 
     return (
-      <div
-        key={`passenger-${index}`}
-        className="bg-white border border-gray-200 rounded-xl p-5 sm:p-6 transition-all hover:border-blue-200 hover:shadow-sm"
-      >
-        {/* Passenger Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5 pb-4 border-b border-gray-100">
-          <div className="flex flex-wrap items-center gap-3">
-            {/* Passenger Badge */}
-            <span className="flex items-center gap-2 bg-blue-50 text-blue-700 font-semibold px-3 py-1.5 rounded-lg text-sm">
-              <User className="w-4 h-4" />
+      <div key={`passenger-${index}`}>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <p className="font-medium text-black">
               {isChild
-                ? `${t("passengerInfo.child", "Child")} ${index - adults + 1}`
-                : `${t("passengerInfo.adult", "Adult")} ${index + 1}`}
-            </span>
-
-            {/* Toggle Switch for Primary User */}
+                ? `${t("passengerInfo.child")} ${index - adults + 1}`
+                : `${t("passengerInfo.adult")} ${index + 1}`}
+            </p>
             {index === 0 && user && (
-              <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5">
+              <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-1">
                 <Switch
                   id="use-user-info"
                   checked={useUserInfo}
@@ -408,30 +400,24 @@ const PassengerInfo: React.FC = () => {
                 />
                 <label
                   htmlFor="use-user-info"
-                  className="text-sm font-medium text-gray-700 cursor-pointer select-none"
+                  className="text-sm text-gray-600 cursor-pointer"
                 >
-                  {t("passengerInfo.useMyInfo", "Autofill my info")}
+                  {t("passengerInfo.useMyInfo", "Use my info")}
                 </label>
               </div>
             )}
           </div>
-
-          {/* Remove Button */}
           {index !== 0 && (
             <button
               onClick={() => removePassenger(index, isChild)}
-              className="flex items-center gap-2 text-sm text-gray-500 hover:text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors"
+              className="bg-gray-100 p-1.5 rounded-full hover:bg-gray-200 transition-colors"
             >
-              <Trash2 className="w-4 h-4" />
-              <span className="hidden sm:inline">
-                {t("actions.remove", "Remove")}
-              </span>
+              <X size={16} className="text-neutral-700" />
             </button>
           )}
         </div>
 
-        {/* Input Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="flex flex-col gap-4 sm:grid sm:grid-cols-2">
           <InputField
             label={t("passengerInfo.firstName")}
             placeholder={t("passengerInfo.firstNamePlaceholder")}
@@ -471,7 +457,7 @@ const PassengerInfo: React.FC = () => {
                 label={t("passengerInfo.phoneNumber")}
                 placeholder="+389 70 123 456"
                 type="tel"
-                inputMode="numeric"
+                inputMode="numeric" // 3. Show numeric keypad on mobile
                 value={passenger.phone}
                 onBlur={() => validatePassenger(index, "phone")}
                 onChange={(value) => handlePhoneChange(index, value)}
@@ -536,36 +522,21 @@ const PassengerInfo: React.FC = () => {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
-      {/* Main Header */}
-      <div className="flex flex-col border-b border-gray-100 pb-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <Users className="w-5 h-5 text-blue-600" />
-          </div>
-          <h2 className="text-xl font-bold text-gray-900">
-            {t("passengerInfo.title", "Passenger Details")}
-          </h2>
-        </div>
-        <p className="text-sm text-gray-500 mt-2 ml-12">
-          {t(
-            "passengerInfo.instructions",
-            "Please enter the details exactly as they appear on your ID or Passport.",
-          )}
+    <div className="flex flex-col bg-white rounded-xl p-4 gap-4">
+      <div className="flex items-center gap-4">
+        <p className="text-[#353535] font-medium text-lg">
+          {t("passengerInfo.title")}
         </p>
       </div>
+      <p className="text-sm text-gray-600">{t("passengerInfo.instructions")}</p>
 
-      {/* Passenger Forms */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         {passengers.map((_, index) =>
           renderPassengerInputs(index, index >= adults),
         )}
       </div>
 
-      {/* Add More Passengers Selector */}
-      <div className="pt-2">
-        <PassengerSelector />
-      </div>
+      <PassengerSelector />
     </div>
   );
 };

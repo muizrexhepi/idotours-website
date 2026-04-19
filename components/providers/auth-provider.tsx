@@ -42,7 +42,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/user/get/email?email=${
             session.user.email
-          }&session=${encodeURIComponent(sanitizedSession)}`
+          }&session=${encodeURIComponent(sanitizedSession)}`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "69420", // The value can be anything
+            },
+          },
         );
 
         setUser(res.data.data);
