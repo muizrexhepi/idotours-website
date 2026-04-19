@@ -27,9 +27,9 @@ export const LoginDialog = () => {
           <div className="hidden lg:flex flex-col justify-center w-full items-center p-8 bg-gradient-to-br from-primary-bg/10 to-primary-bg/5">
             <div className="flex justify-center items-center flex-col mx-auto space-y-6">
               <Image
-                src="/assets/icons/icon.svg"
-                width={170}
-                height={170}
+                src="/logo.png"
+                width={220}
+                height={220}
                 alt="logo"
                 className="mb-8"
               />

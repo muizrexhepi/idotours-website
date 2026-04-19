@@ -31,7 +31,7 @@ export default function AuthForm() {
   const pathname = usePathname();
   const { toast } = useToast();
   const [formState, setFormState] = useState<"initial" | "email" | "otp">(
-    "initial"
+    "initial",
   );
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -61,7 +61,7 @@ export default function AuthForm() {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/user/otp/send`,
-        { email }
+        { email },
       );
 
       if (response.status === 200) {
@@ -164,7 +164,7 @@ export default function AuthForm() {
       {/* Logo */}
       <div className="lg:hidden flex justify-center">
         <Image
-          src="/assets/icons/icon.svg"
+          src="/logo.png"
           alt="Logo"
           width={96}
           height={96}
@@ -189,8 +189,8 @@ export default function AuthForm() {
           {formState === "otp"
             ? "Enter Verification Code"
             : formState === "email"
-            ? "Sign in with Email"
-            : "Welcome back"}
+              ? "Sign in with Email"
+              : "Welcome back"}
         </h2>
         {isOnCheckout && (
           <p className="text-sm text-muted-foreground">
@@ -293,7 +293,7 @@ export default function AuthForm() {
             />
             Continue with Google
           </Button>
-          <Button
+          {/* <Button
             variant="outline"
             className="w-full h-12 font-normal border-[1px] hover:bg-muted/50"
             onClick={handleFacebookLogin}
@@ -306,7 +306,7 @@ export default function AuthForm() {
               className="mr-2"
             />
             Continue with Facebook
-          </Button>
+          </Button> */}
           <Button
             variant="outline"
             className="w-full h-12 font-normal border-[1px] hover:bg-muted/50"
