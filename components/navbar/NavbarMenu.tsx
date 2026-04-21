@@ -211,7 +211,6 @@ const NavbarMenu = () => {
     </div>
   );
 
-  // --- Render ---
   if (isMobile) {
     return (
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
