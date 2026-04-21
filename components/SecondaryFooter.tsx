@@ -13,7 +13,9 @@ const SecondaryFooter = ({ className }: { className?: string }) => {
     >
       <div className="max-w-6xl mx-auto paddingX">
         <div className="flex flex-wrap justify-center sm:justify-between items-center border-t  pt-4 gap-2">
-          <p className="text-sm text-black/70">{t("footer.copyright")}</p>
+          <p className="text-sm text-black/70">
+            &copy; {new Date().getFullYear()} IdoTours
+          </p>
           <nav className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4 mt-2 sm:mt-0">
             <Link
               href="/legal/privacy-policy"

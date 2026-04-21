@@ -160,7 +160,7 @@ const UserNavbarMenu = () => {
           <SheetHeader className="p-4 text-left border-b">
             <SheetTitle className="flex items-center">
               <Image
-                src="/assets/icons/dark-logo.svg"
+                src="/logo.png"
                 alt="GoBusly"
                 width={140}
                 height={40}

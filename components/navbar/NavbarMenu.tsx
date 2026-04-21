@@ -223,7 +223,7 @@ const NavbarMenu = () => {
           <SheetHeader className="p-4 text-left border-b flex flex-row justify-between items-center space-y-0">
             <SheetTitle>
               <Image
-                src="/assets/icons/dark-logo.svg"
+                src="/logo.png"
                 alt="GoBusly"
                 width={120}
                 height={32}
