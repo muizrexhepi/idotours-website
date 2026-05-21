@@ -1,16 +1,9 @@
 "use client";
 
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 import PassengerInfo from "@/app/checkout/_components/PassengerInfo";
-import Extras from "@/app/checkout/_components/ExtrasInfo";
 import PaymentMethod from "@/app/checkout/_components/PaymentMethod";
 import OrderSummary from "@/app/checkout/_components/OrderSummary";
 import LoginCTA from "@/app/checkout/_components/LoginCTA";
-
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-);
 
 const CheckoutForm = () => {
   return (
@@ -31,10 +24,4 @@ const CheckoutForm = () => {
   );
 };
 
-const CheckoutPage = () => (
-  <Elements stripe={stripePromise}>
-    <CheckoutForm />
-  </Elements>
-);
-
-export default CheckoutPage;
+export default CheckoutForm;

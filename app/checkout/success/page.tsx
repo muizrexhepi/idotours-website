@@ -11,17 +11,29 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { usePaymentSuccessStore } from "@/store";
+import { useCheckoutStore, usePaymentSuccessStore } from "@/store";
 import axios from "axios";
 import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/components/providers/auth-provider";
+import { fetchHalkbankPaymentStatus } from "@/actions/checkout/payment-actions";
 
 const SuccessPage: React.FC = () => {
   const { t } = useTranslation();
-  const { isPaymentSuccess, bookingDetails } = usePaymentSuccessStore();
+  const {
+    isPaymentSuccess,
+    bookingDetails,
+    setIsPaymentSuccess,
+    setBookingDetails,
+  } = usePaymentSuccessStore();
+  const { resetCheckout } = useCheckoutStore();
+  const searchParams = useSearchParams();
+  const paymentId = searchParams.get("paymentId");
+  const fallbackBookingId = searchParams.get("bookingId");
+  const [isRestoringPayment, setIsRestoringPayment] = useState(!!paymentId);
   const [walletSupport, setWalletSupport] = useState<{
     supported: boolean;
     platform: "ios" | "google" | null;
@@ -40,6 +52,150 @@ const SuccessPage: React.FC = () => {
       setWalletSupport({ supported: true, platform: "google" });
     else setWalletSupport({ supported: false, platform: null });
   }, []);
+
+  const downloadPdf = async () => {
+    if (!bookingDetails?.bookingId) return;
+
+    try {
+      const response = await axios({
+        method: "post",
+        url: `${process.env.NEXT_PUBLIC_API_URL}/booking/download/pdf/e-ticket/${bookingDetails.bookingId}`,
+        responseType: "blob",
+        headers: { Accept: "application/pdf" },
+      });
+      const blob = new Blob([response.data], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `ticket-${bookingDetails.bookingId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      // optionally handle error
+    }
+  };
+
+  const addToWallet = async () => {
+    if (!bookingDetails?.bookingId) return;
+
+    try {
+      const endpoint =
+        walletSupport.platform === "ios"
+          ? `${process.env.NEXT_PUBLIC_API_URL}/wallet/ios/${bookingDetails.bookingId}`
+          : `${process.env.NEXT_PUBLIC_API_URL}/wallet/google/${bookingDetails.bookingId}`;
+
+      const response = await axios.post(endpoint);
+      if (response.data?.saveUrl) window.open(response.data.saveUrl, "_blank");
+    } catch (error) {
+      // optionally handle error
+    }
+  };
+
+  useEffect(() => {
+    if (!paymentId || isPaymentSuccess) {
+      setIsRestoringPayment(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    const restorePayment = async () => {
+      try {
+        const response = await fetchHalkbankPaymentStatus(paymentId);
+        const payment = response.data;
+
+        if (cancelled) return;
+
+        if (payment.status !== "approved") {
+          setIsRestoringPayment(false);
+          return;
+        }
+
+        const booking = payment.booking;
+        const summary = payment.bookingSummaries?.[0];
+
+        setIsPaymentSuccess(true);
+        setBookingDetails({
+          bookingId: booking?._id || fallbackBookingId || "",
+          transactionId: payment.orderId,
+          departureStation:
+            booking?.destinations?.departure_station_label ||
+            summary?.departureStation ||
+            "",
+          arrivalStation:
+            booking?.destinations?.arrival_station_label ||
+            summary?.arrivalStation ||
+            "",
+          departureDate: new Date(
+            booking?.departure_date || summary?.departureDate || Date.now(),
+          ),
+          price: Number(booking?.price || summary?.price || payment.amount || 0),
+          operator: booking?.operator?.name || summary?.operator || "Bus Operator",
+        });
+
+        const abandonedCheckoutId = sessionStorage.getItem(
+          "halkbank_checkout_id",
+        );
+        if (abandonedCheckoutId) {
+          sessionStorage.removeItem("halkbank_checkout_id");
+          fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/abandoned-checkout/${abandonedCheckoutId}`,
+            { method: "DELETE" },
+          ).catch(() => undefined);
+        }
+
+        resetCheckout();
+      } catch (error) {
+        // Keep the fallback failed state below.
+      } finally {
+        if (!cancelled) setIsRestoringPayment(false);
+      }
+    };
+
+    restorePayment();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    fallbackBookingId,
+    isPaymentSuccess,
+    paymentId,
+    resetCheckout,
+    setBookingDetails,
+    setIsPaymentSuccess,
+  ]);
+
+  // 🔹 Auto-download only once per booking (per browser session)
+  useEffect(() => {
+    if (!bookingDetails) return;
+
+    const storageKey = `ticket-downloaded-${bookingDetails.bookingId}`;
+    const alreadyDownloaded =
+      typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
+
+    if (!alreadyDownloaded) {
+      downloadPdf().then(() => {
+        sessionStorage.setItem(storageKey, "true");
+      });
+    }
+  }, [bookingDetails]);
+
+  if (isRestoringPayment) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
+        <div className="w-full max-w-md text-center space-y-4">
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <h1 className="text-xl font-semibold text-gray-900">
+            Confirming your payment
+          </h1>
+          <p className="text-gray-600">Please wait while we load your booking.</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!isPaymentSuccess || !bookingDetails) {
     return (
@@ -63,57 +219,6 @@ const SuccessPage: React.FC = () => {
       </div>
     );
   }
-
-  const downloadPdf = async () => {
-    try {
-      const response = await axios({
-        method: "post",
-        url: `${process.env.NEXT_PUBLIC_API_URL}/booking/download/pdf/e-ticket/${bookingDetails.bookingId}`,
-        responseType: "blob",
-        headers: { Accept: "application/pdf" },
-      });
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `ticket-${bookingDetails.bookingId}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      // optionally handle error
-    }
-  };
-
-  const addToWallet = async () => {
-    try {
-      const endpoint =
-        walletSupport.platform === "ios"
-          ? `${process.env.NEXT_PUBLIC_API_URL}/wallet/ios/${bookingDetails.bookingId}`
-          : `${process.env.NEXT_PUBLIC_API_URL}/wallet/google/${bookingDetails.bookingId}`;
-
-      const response = await axios.post(endpoint);
-      if (response.data?.saveUrl) window.open(response.data.saveUrl, "_blank");
-    } catch (error) {
-      // optionally handle error
-    }
-  };
-
-  // 🔹 Auto-download only once per booking (per browser session)
-  useEffect(() => {
-    if (!bookingDetails) return;
-
-    const storageKey = `ticket-downloaded-${bookingDetails.bookingId}`;
-    const alreadyDownloaded =
-      typeof window !== "undefined" ? sessionStorage.getItem(storageKey) : null;
-
-    if (!alreadyDownloaded) {
-      downloadPdf().then(() => {
-        sessionStorage.setItem(storageKey, "true");
-      });
-    }
-  }, [bookingDetails]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 pb-24">

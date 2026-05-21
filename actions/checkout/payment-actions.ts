@@ -48,10 +48,76 @@ export interface CreateBookingsParams {
   abandonedCheckoutId?: string;
 }
 
+export interface HalkbankBookingRequest {
+  operatorId: string;
+  userId?: string | null;
+  ticketId: string;
+  body: Record<string, any>;
+}
+
+export interface HalkbankBookingSummary {
+  departureStation: string;
+  arrivalStation: string;
+  departureDate: string | Date;
+  price: number;
+  operator: any;
+}
+
+export interface InitiateHalkbankPaymentParams extends CreateBookingsParams {}
+
 export interface SaveCardInfoParams {
   stripe: any;
   elements: any;
   user: any;
+}
+
+export async function initiateHalkbankPayment(
+  params: InitiateHalkbankPaymentParams,
+) {
+  const { bookingRequests, bookingSummaries } =
+    buildHalkbankBookingPayload(params);
+
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/payment/halkbank/initiate`,
+    {
+      amount: params.finalAmount,
+      bookingRequests,
+      bookingSummaries,
+    },
+  );
+
+  return response.data;
+}
+
+export async function fetchHalkbankPaymentStatus(orderId: string) {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API_URL}/payment/halkbank/status/${orderId}`,
+    {
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+    },
+  );
+
+  return response.data;
+}
+
+export function submitHalkbankForm(postUrl: string, fields: Record<string, any>) {
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = postUrl;
+  form.style.display = "none";
+
+  Object.entries(fields).forEach(([name, value]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = String(value ?? "");
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
 }
 
 /**
@@ -439,6 +505,255 @@ export async function fetchPaymentMethods(stripeCustomerId: string) {
 
   const data = await response.json();
   return data.data.data;
+}
+
+export function buildHalkbankBookingPayload(params: CreateBookingsParams): {
+  bookingRequests: HalkbankBookingRequest[];
+  bookingSummaries: HalkbankBookingSummary[];
+} {
+  const {
+    outboundTicket,
+    returnTicket,
+    finalAmount,
+    discountAmount,
+    discountCode,
+    passengerAmount,
+    passengers,
+    selectedFlex,
+    flexPrice,
+    userId,
+    abandonedCheckoutId,
+  } = params;
+
+  const bookingRequests: HalkbankBookingRequest[] = [];
+  const bookingSummaries: HalkbankBookingSummary[] = [];
+
+  const outboundTotalPrice = outboundTicket
+    ? isConnectedTicket(outboundTicket)
+      ? outboundTicket.legs.reduce((sum, leg) => sum + leg.price, 0)
+      : outboundTicket.stops.reduce((sum, stop) => sum + stop.price, 0)
+    : 0;
+
+  const returnTotalPrice = returnTicket
+    ? isConnectedTicket(returnTicket)
+      ? returnTicket.legs.reduce((sum, leg) => sum + leg.price, 0)
+      : returnTicket.stops.reduce((sum, stop) => sum + stop.price, 0)
+    : 0;
+
+  const grandTotalPrice = outboundTotalPrice + returnTotalPrice;
+  const proportionalDiscount = (ticketTotalPrice: number) =>
+    grandTotalPrice > 0 ? (discountAmount * ticketTotalPrice) / grandTotalPrice : 0;
+
+  if (outboundTicket) {
+    if (isConnectedTicket(outboundTicket)) {
+      for (let i = 0; i < outboundTicket.legs.length; i++) {
+        const leg = outboundTicket.legs[i];
+        const legTicket = createLegTicket(leg, outboundTicket, i) as any;
+        const legTicketTotal =
+          leg.price * (passengerAmount.adults || 1) +
+          leg.children_price * (passengerAmount.children || 0);
+        const outboundDiscountPortion = proportionalDiscount(outboundTotalPrice);
+        const legDiscountAmount =
+          outboundTotalPrice > 0
+            ? outboundDiscountPortion * (leg.price / outboundTotalPrice)
+            : 0;
+
+        appendHalkbankBookingRequest({
+          bookingRequests,
+          bookingSummaries,
+          ticket: legTicket,
+          isReturn: false,
+          ticketTotal: legTicketTotal,
+          discountAmount: legDiscountAmount,
+          discountCode,
+          operatorPrice: legTicketTotal,
+          passengers,
+          selectedFlex,
+          flexPrice,
+          userId,
+          abandonedCheckoutId: i === 0 ? abandonedCheckoutId : undefined,
+        });
+      }
+    } else {
+      const regularOutboundTotal = outboundTicket.stops.reduce((sum, stop) => {
+        return (
+          sum +
+          stop.price * (passengerAmount.adults || 1) +
+          (stop.children_price || 0) * (passengerAmount.children || 0)
+        );
+      }, 0);
+
+      appendHalkbankBookingRequest({
+        bookingRequests,
+        bookingSummaries,
+        ticket: outboundTicket,
+        isReturn: false,
+        ticketTotal: regularOutboundTotal,
+        discountAmount: proportionalDiscount(outboundTotalPrice),
+        discountCode,
+        passengers,
+        selectedFlex,
+        flexPrice,
+        userId,
+        abandonedCheckoutId,
+      });
+    }
+  }
+
+  if (returnTicket) {
+    if (isConnectedTicket(returnTicket)) {
+      for (let i = 0; i < returnTicket.legs.length; i++) {
+        const leg = returnTicket.legs[i];
+        const legTicket = createLegTicket(leg, returnTicket, i) as any;
+        const legTicketTotal =
+          leg.price * (passengerAmount.adults || 1) +
+          leg.children_price * (passengerAmount.children || 0);
+        const returnDiscountPortion = proportionalDiscount(returnTotalPrice);
+        const legDiscountAmount =
+          returnTotalPrice > 0
+            ? returnDiscountPortion * (leg.price / returnTotalPrice)
+            : 0;
+
+        appendHalkbankBookingRequest({
+          bookingRequests,
+          bookingSummaries,
+          ticket: legTicket,
+          isReturn: true,
+          ticketTotal: legTicketTotal,
+          discountAmount: legDiscountAmount,
+          discountCode,
+          operatorPrice: legTicketTotal,
+          passengers,
+          selectedFlex,
+          flexPrice,
+          userId,
+        });
+      }
+    } else {
+      const regularReturnTotal = returnTicket.stops.reduce((sum, stop) => {
+        return (
+          sum +
+          stop.price * (passengerAmount.adults || 1) +
+          (stop.children_price || 0) * (passengerAmount.children || 0)
+        );
+      }, 0);
+
+      appendHalkbankBookingRequest({
+        bookingRequests,
+        bookingSummaries,
+        ticket: returnTicket,
+        isReturn: true,
+        ticketTotal: regularReturnTotal,
+        discountAmount: proportionalDiscount(returnTotalPrice),
+        discountCode,
+        passengers,
+        selectedFlex,
+        flexPrice,
+        userId,
+      });
+    }
+  }
+
+  if (bookingSummaries.length > 0) {
+    bookingSummaries[0].price = finalAmount;
+  }
+
+  return { bookingRequests, bookingSummaries };
+}
+
+function appendHalkbankBookingRequest(params: {
+  bookingRequests: HalkbankBookingRequest[];
+  bookingSummaries: HalkbankBookingSummary[];
+  ticket: Ticket;
+  isReturn: boolean;
+  ticketTotal: number;
+  discountAmount: number;
+  discountCode: string | null;
+  operatorPrice?: number;
+  passengers: any[];
+  selectedFlex: string;
+  flexPrice: number;
+  userId?: string;
+  abandonedCheckoutId?: string;
+}) {
+  const {
+    bookingRequests,
+    bookingSummaries,
+    ticket,
+    isReturn,
+    ticketTotal,
+    discountAmount,
+    discountCode,
+    operatorPrice,
+    passengers,
+    selectedFlex,
+    flexPrice,
+    userId,
+    abandonedCheckoutId,
+  } = params;
+
+  const passengersWithPrices = calculatePassengerPrices(passengers, ticket);
+  const ticketTotalDiscounted = ticketTotal - discountAmount;
+  const affiliateCode = getStoredAffiliateCode();
+  const totalPrice = ticketTotalDiscounted + (isReturn ? 0 : flexPrice);
+
+  bookingRequests.push({
+    operatorId: getEntityId(ticket.operator),
+    userId: userId || null,
+    ticketId: getEntityId(ticket._id),
+    body: {
+      passengers: passengersWithPrices,
+      travel_flex: selectedFlex,
+      platform: "WEB",
+      flex_price: isReturn ? 0 : flexPrice,
+      total_price: totalPrice,
+      original_price: ticketTotal + (isReturn ? 0 : flexPrice),
+      discount_amount: discountAmount,
+      discount_code: discountCode,
+      operator_price: operatorPrice || ticketTotal,
+      departure_station: ticket.stops[0].from._id,
+      arrival_station: ticket.stops[0].to._id,
+      departure_station_label: ticket.stops[0].from.name,
+      arrival_station_label: ticket.stops[0].to.name,
+      is_using_deposited_money: false,
+      deposit_spent: 0,
+      stop: ticket.stops[0],
+      is_return: isReturn,
+      affiliate_code: affiliateCode,
+      gobusly_language: getLanguageFromCookies() || "en",
+      abandoned_checkout_id: abandonedCheckoutId,
+      ...ticket.metadata,
+    },
+  });
+
+  bookingSummaries.push({
+    departureStation: ticket.stops[0].from.name,
+    arrivalStation: ticket.stops[0].to.name,
+    departureDate: ticket.stops[0].departure_date,
+    price: totalPrice,
+    operator: ticket.metadata?.operator_name || "Unknown",
+  });
+}
+
+function getEntityId(value: any) {
+  return value?._id || value?.$id || value?.id || value;
+}
+
+function getStoredAffiliateCode() {
+  if (typeof window === "undefined") return null;
+
+  const storedAffiliate = localStorage.getItem("affiliate");
+  if (!storedAffiliate) return null;
+
+  try {
+    const { code, expires } = JSON.parse(storedAffiliate);
+    if (Date.now() < expires) return code;
+    localStorage.removeItem("affiliate");
+  } catch (error) {
+    localStorage.removeItem("affiliate");
+  }
+
+  return null;
 }
 
 /**
