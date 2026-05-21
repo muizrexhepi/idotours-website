@@ -9,7 +9,6 @@ export default function Home() {
   return (
     <>
       <HeroWrapper />
-
       <main>
         <FeaturesSection />
         <MobileAppSection />
