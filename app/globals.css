@@ -74,12 +74,12 @@
 
 ::-moz-selection {
   color: #fff;
-  background: #0f172a;
+  background: #2563eb;
 }
 
 ::selection {
   color: #fff;
-  background: #0f172a;
+  background: #2563eb;
 }
 
 input[type="radio"] {
@@ -94,8 +94,8 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked {
-  background-color: #0f172a;
-  border-color: #0f172a;
+  background-color: #2563eb;
+  border-color: #2563eb;
 }
 .prose {
   @apply text-gray-700;
@@ -131,7 +131,7 @@ input[type="radio"]:checked {
 }
 
 .prose a {
-  @apply text-[#0f172a] hover:underline font-medium;
+  @apply text-[#2563eb] hover:underline font-medium;
 }
 
 .prose .image-placeholder {
@@ -143,7 +143,7 @@ input[type="radio"]:checked {
 }
 
 .prose .cta-section {
-  @apply mt-12 p-8 bg-gradient-to-r from-[#0f172a]/5 to-orange-50 rounded-2xl text-center;
+  @apply mt-12 p-8 bg-gradient-to-r from-[#2563eb]/5 to-sky-50 rounded-2xl text-center;
 }
 
 .prose .btn {
@@ -151,7 +151,7 @@ input[type="radio"]:checked {
 }
 
 .prose .btn-primary {
-  @apply bg-[#0f172a] text-white hover:bg-[#0f172a]/90;
+  @apply bg-[#2563eb] text-white hover:bg-[#1d4ed8];
 }
 
 .prose .btn-secondary {

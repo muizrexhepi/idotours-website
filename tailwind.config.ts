@@ -33,8 +33,8 @@ const config: Config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          bg: "#1a2b4b", /* Updated to match the Deep Navy from the logo */
-          accent: "#0f172a", /* Replaced the old red with the Cyan accent */
+          bg: "#1d4ed8",
+          accent: "#2563eb",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
