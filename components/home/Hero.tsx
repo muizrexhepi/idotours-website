@@ -9,10 +9,10 @@ import {
   UsersRound,
   Wifi,
 } from "lucide-react";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
-const HERO_BUS_IMAGE =
-  "https://autobusi.org/forum/index.php?action=dlattach;fs=149715;attach=118828";
+const HERO_BUS_IMAGE = "/heroimg.jpeg";
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -21,12 +21,14 @@ const Hero = () => {
     <section className="relative hidden overflow-hidden bg-white md:block">
       {/* Hero image */}
       <div className="relative h-[520px] w-full overflow-hidden bg-[#10243f]">
-<img
-  src={HERO_BUS_IMAGE}
-  alt={t("hero.busImageAlt", "IDoTours coach bus")}
-  className="h-full w-full object-cover object-[center_58%]"
-  loading="eager"
-/>
+        <Image
+          src={HERO_BUS_IMAGE}
+          alt={t("hero.busImageAlt", "IDoTours coach bus")}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_38%]"
+        />
 
         <div className="absolute inset-0 bg-gradient-to-r from-[#081827]/85 via-[#081827]/45 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
