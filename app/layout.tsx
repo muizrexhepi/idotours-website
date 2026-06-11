@@ -7,7 +7,7 @@ import ClientProviders from "@/components/providers/client-providers";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "@/components/navbar/Navbar";
 import CookieConsent from "@/components/CookieConsent";
-
+ 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
   subsets: ["latin-ext"],
