@@ -213,7 +213,6 @@
     "manageDescription": "Découvrez comment modifier ou annuler vos réservations",
     "modifyBooking": "Comment Modifier une Réservation",
     "modifyBookingSteps": {
-      "intro": "Pour modifier votre réservation :",
       "1": "Connectez-vous à votre compte sur notre site Web ou notre application",
       "2": "Allez dans 'Mes Réservations'",
       "3": "Sélectionnez la réservation que vous souhaitez modifier",
@@ -221,6 +220,7 @@
       "5": "Apportez les modifications souhaitées",
       "6": "Payez toute différence de tarif ou frais",
       "7": "Recevez une confirmation de votre réservation modifiée",
+      "intro": "Pour modifier votre réservation :",
       "note": "Remarque : Les modifications sont soumises à notre politique de changements et peuvent entraîner des frais."
     },
     "cancellationPolicy": "Politique d'Annulation",
@@ -246,7 +246,15 @@
     "missBus": "Que se passe-t-il si je rate mon bus ?",
     "missBusContent": "Si vous ratez votre bus, votre billet est généralement considéré comme non valide. Cependant, nous comprenons que des situations imprévues peuvent survenir. Contactez notre service client dès que possible, et nous ferons de notre mieux pour vous placer sur le prochain bus disponible, sous réserve de disponibilité et d'éventuels frais supplémentaires.",
     "powerOutlets": "Y a-t-il des prises électriques dans le bus ?",
-    "powerOutletsContent": "La plupart de nos bus sont équipés de prises électriques pour chaque siège. Cependant, la disponibilité peut varier selon le bus et l'itinéraire spécifique. Nous vous recommandons d'apporter un chargeur portable en secours, particulièrement pour les longs trajets."
+    "powerOutletsContent": "La plupart de nos bus sont équipés de prises électriques pour chaque siège. Cependant, la disponibilité peut varier selon le bus et l'itinéraire spécifique. Nous vous recommandons d'apporter un chargeur portable en secours, particulièrement pour les longs trajets.",
+    "popularEuropeRoutes": "Quels itinéraires de bus européens puis-je réserver en ligne ?",
+    "popularEuropeRoutesContent": "Vous pouvez rechercher et réserver des trajets populaires depuis la Macédoine et les Balkans vers des destinations en Europe, notamment l'Allemagne, la Suisse, l'Autriche, l'Italie et des villes régionales proches lorsque les horaires sont disponibles.",
+    "crossBorderBooking": "Puis-je réserver des billets de bus internationaux depuis les Balkans ?",
+    "crossBorderBookingContent": "Oui. GoBusly prend en charge les réservations transfrontalières sur les lignes disponibles, afin que vous puissiez comparer les départs, les prix, les opérateurs et les durées de voyage avant de choisir le trajet adapté.",
+    "printTicket": "Dois-je imprimer mon billet de bus ?",
+    "printTicketContent": "Dans la plupart des cas, votre billet électronique sur téléphone suffit. Nous recommandons tout de même de garder votre téléphone chargé et d'enregistrer le billet hors ligne. Certains opérateurs peuvent demander un billet imprimé, vérifiez donc toujours les instructions dans l'e-mail de réservation.",
+    "bestTimeToBook": "Quel est le meilleur moment pour réserver des billets de bus vers l'Europe ?",
+    "bestTimeToBookContent": "Pour les périodes chargées, les vacances et les trajets de la diaspora, réserver plus tôt offre généralement une meilleure disponibilité des sièges et plus de choix de départs. Des billets de dernière minute peuvent exister, mais les lignes populaires peuvent afficher complet."
   },
   "extrasInfo": {
     "title": "Options Flex Voyage",
@@ -334,6 +342,13 @@
       "reliableDesc": "Départs et arrivées à l'heure",
       "secure": "Réservation sécurisée",
       "secureDesc": "Système de réservation en ligne sûr et sécurisé"
+    },
+    "busImageAlt": "Autocar IDoTours",
+    "badge": "Réservation de bus simple à travers l'Europe",
+    "trust": {
+      "secure": "Paiement sécurisé",
+      "fast": "Billets instantanés",
+      "comfort": "Trajets confortables"
     }
   },
   "about": {
@@ -788,7 +803,6 @@
     "exportSuccess": "Vos données ont été téléchargées avec succès",
     "exportError": "Échec de l'export des données. Veuillez réessayer",
     "userNotFound": "Utilisateur non trouvé. Veuillez vous reconnecter",
-
     "accountSecurityTitle": "Sécurité du Compte",
     "accountSecuritySubtitle": "Gérez votre mot de passe et la sécurité de connexion",
     "securityInfo": "Sécurisez votre compte en utilisant un mot de passe fort",
@@ -799,7 +813,6 @@
     "lastLogin": "Dernière connexion : {date}",
     "secure": "Sécurisé",
     "unknown": "Inconnu",
-
     "changePasswordTitle": "Changer le Mot de Passe",
     "changePasswordDescription": "Entrez votre mot de passe actuel et choisissez un nouveau mot de passe sécurisé",
     "currentPassword": "Mot de Passe Actuel",
@@ -811,13 +824,11 @@
     "passwordChangeError": "Impossible de modifier le mot de passe",
     "changing": "Modification en cours...",
     "cancel": "Annuler",
-
     "privacyTitle": "Confidentialité et Données",
     "privacySubtitle": "Contrôlez comment vos données sont traitées et stockées",
     "dataRetention": "Conservation des Données",
     "dataRetentionDescription": "Vos données sont conservées selon notre politique de confidentialité",
     "automatic": "Automatique",
-
     "deleteAccountTitle": "Supprimer le Compte",
     "deleteAccountDescription": "Besoin de supprimer votre compte ? Contactez notre équipe de support pour assistance.",
     "contactSupport": "Visitez notre page de support :"
@@ -1090,5 +1101,25 @@
     "backToOperators": "Retour à tous les opérateurs",
     "checkPrice": "Vérifier le Prix",
     "startingFrom": "À partir de"
+  },
+  "home": {
+    "benefits": {
+      "routes": {
+        "title": "Nous vous connectons à l'Europe",
+        "desc": "Voyagez depuis la Macédoine vers des destinations européennes populaires avec une réservation en ligne simple."
+      },
+      "comfort": {
+        "title": "Le confort en route",
+        "desc": "Bus modernes, sièges confortables, climatisation et une expérience de voyage plus agréable."
+      },
+      "booking": {
+        "title": "Choisissez, réservez, voyagez",
+        "desc": "Trouvez votre itinéraire, payez en toute sécurité et recevez votre billet instantanément."
+      },
+      "together": {
+        "title": "Voyagez ensemble",
+        "desc": "Réservez pour vous, votre famille ou votre groupe en quelques clics seulement."
+      }
+    }
   }
 }

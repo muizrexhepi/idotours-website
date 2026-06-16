@@ -45,13 +45,8 @@ export const ContactClientPage = () => {
           content={
             <div className="space-y-2">
               <p className="text-gray-600">
-                <a href="tel:+38970250259" className="e text-primary">
-                  +389 70 250 259
-                </a>
-              </p>
-              <p className="text-gray-600">
                 <a href="tel:+38976224065" className="e text-primary">
-                  +389 76 224 065
+                  +389 075 468 077
                 </a>
               </p>
               <p className="text-sm text-transparent bg-clip-text button-gradient font-medium">

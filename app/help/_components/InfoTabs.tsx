@@ -238,6 +238,38 @@ const InfoTabs = () => {
                   {t("infoTabs.powerOutletsContent")}
                 </AccordionContent>
               </AccordionItem>
+              <AccordionItem value="item-5">
+                <AccordionTrigger>
+                  {t("infoTabs.popularEuropeRoutes")}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t("infoTabs.popularEuropeRoutesContent")}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-6">
+                <AccordionTrigger>
+                  {t("infoTabs.crossBorderBooking")}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t("infoTabs.crossBorderBookingContent")}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-7">
+                <AccordionTrigger>
+                  {t("infoTabs.printTicket")}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t("infoTabs.printTicketContent")}
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-8">
+                <AccordionTrigger>
+                  {t("infoTabs.bestTimeToBook")}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {t("infoTabs.bestTimeToBookContent")}
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </CardContent>
         </Card>

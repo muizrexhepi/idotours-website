@@ -11,7 +11,7 @@ const FOOTER_LINKS = [
     title: "Company",
     links: [
       { name: "Contact", link: "/help/contact-support" },
-      { name: "FAQ", link: "/help/faq" },
+      { name: "FAQ", link: "/help" },
       { name: "Help", link: "/help" },
     ],
   },
@@ -28,8 +28,7 @@ const FOOTER_LINKS = [
 
 const CONTACT_INFO = {
   email: "info@idotours.com.mk",
-  phone1: "+389 76 224 065",
-  phone2: "+389 70 250 259",
+  phone1: "+389 075 468 077",
 };
 
 const SOCIAL_LINKS = [

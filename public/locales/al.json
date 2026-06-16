@@ -192,7 +192,6 @@
     "manageDescription": "Mësoni si të modifikoni ose anuloni rezervimet tuaja",
     "modifyBooking": "Si të Modifikoni një Rezervim",
     "modifyBookingSteps": {
-      "intro": "Për të modifikuar rezervimin tuaj:",
       "1": "Identifikohuni në llogarinë tuaj në faqen tonë të internetit ose aplikacion",
       "2": "Shkoni te \"Rezervimet e Mia\"",
       "3": "Zgjidhni rezervimin që dëshironi të modifikoni",
@@ -200,6 +199,7 @@
       "5": "Bëni ndryshimet e dëshiruara",
       "6": "Paguani çdo ndryshim në tarifë ose tarifa shtesë",
       "7": "Merrni konfirmimin e rezervimit të modifikuar",
+      "intro": "Për të modifikuar rezervimin tuaj:",
       "note": "Shënim: Modifikimet i nënshtrohen politikës sonë të ndryshimit dhe mund të kenë tarifa."
     },
     "cancellationPolicy": "Politika e Anulimit",
@@ -225,7 +225,15 @@
     "missBus": "Çfarë ndodh nëse humbas autobusin?",
     "missBusContent": "Nëse humbisni autobusin, bileta juaj zakonisht konsiderohet e pavlefshme. Megjithatë, ne kuptojmë që mund të ndodhin situata të papritura. Kontaktoni shërbimin tonë të klientit sa më shpejt të jetë e mundur dhe ne do të bëjmë më të mirën për t'ju akomoduar në autobusin e ardhshëm të disponueshëm, në varësi të disponueshmërisë dhe tarifave të mundshme shtesë.",
     "powerOutlets": "A ka priza elektrike në autobus?",
-    "powerOutletsContent": "Shumica e autobusëve tanë janë të pajisur me priza elektrike për çdo vend. Megjithatë, disponueshmëria mund të ndryshojë në varësi të autobusit dhe rrugës specifike. Ne rekomandojmë të sillni një karikues portativ si rezervë, veçanërisht për udhëtime më të gjata."
+    "powerOutletsContent": "Shumica e autobusëve tanë janë të pajisur me priza elektrike për çdo vend. Megjithatë, disponueshmëria mund të ndryshojë në varësi të autobusit dhe rrugës specifike. Ne rekomandojmë të sillni një karikues portativ si rezervë, veçanërisht për udhëtime më të gjata.",
+    "popularEuropeRoutes": "Cilat linja autobusësh për në Evropë mund t'i rezervoj online?",
+    "popularEuropeRoutesContent": "Mund të kërkoni dhe rezervoni linja të njohura nga Maqedonia dhe Ballkani drejt destinacioneve në Evropë, përfshirë Gjermaninë, Zvicrën, Austrinë, Italinë dhe qytete rajonale kur oraret janë të disponueshme.",
+    "crossBorderBooking": "A mund të rezervoj bileta autobusi ndërkombëtare nga Ballkani?",
+    "crossBorderBookingContent": "Po. GoBusly mbështet rezervime ndërkufitare në linjat e disponueshme, që të mund të krahasoni nisjet, çmimet, operatorët dhe kohëzgjatjen e udhëtimit para se të zgjidhni udhëtimin tuaj.",
+    "printTicket": "A duhet ta printoj biletën e autobusit?",
+    "printTicketContent": "Në shumicën e rasteve, bileta elektronike në telefon mjafton. Megjithatë rekomandojmë ta mbani telefonin të karikuar dhe ta ruani biletën offline. Disa operatorë mund të kërkojnë biletë të printuar, prandaj kontrolloni gjithmonë udhëzimet në emailin e rezervimit.",
+    "bestTimeToBook": "Kur është koha më e mirë për të rezervuar bileta autobusi për në Evropë?",
+    "bestTimeToBookContent": "Për periudha të ngarkuara, festa dhe linja të diasporës, rezervimi më herët zakonisht ju jep më shumë vende të lira dhe më shumë zgjedhje nisjesh. Bileta të minutës së fundit mund të jenë të disponueshme, por linjat e njohura mund të shiten shpejt."
   },
   "extrasInfo": {
     "title": "Opsionet e Fleksibilitetit të Udhëtimit",
@@ -314,6 +322,13 @@
       "reliableDesc": "Nisje dhe mbërritje në kohë",
       "secure": "Rezervim i sigurt",
       "secureDesc": "Sistem i sigurt dhe i besueshëm për rezervime online"
+    },
+    "busImageAlt": "Autobus IDoTours",
+    "badge": "Rezervim i thjeshtë autobusësh nëpër Evropë",
+    "trust": {
+      "secure": "Pagesë e sigurt",
+      "fast": "Bileta të menjëhershme",
+      "comfort": "Linja komode"
     }
   },
   "about": {
@@ -798,7 +813,6 @@
     "exportSuccess": "Të dhënat tuaja u shkarkuan me sukses",
     "exportError": "Eksporti i të dhënave dështoi. Provoni përsëri",
     "userNotFound": "Përdoruesi nuk u gjet. Kyçuni përsëri",
-
     "accountSecurityTitle": "Siguria e Llogarisë",
     "accountSecuritySubtitle": "Menaxhoni fjalëkalimin tuaj dhe sigurinë e kyçjes",
     "securityInfo": "Mbajeni llogarinë tuaj të sigurt duke përdorur një fjalëkalim të fortë",
@@ -809,7 +823,6 @@
     "lastLogin": "Kyçja e fundit: {date}",
     "secure": "E Sigurt",
     "unknown": "I Panjohur",
-
     "changePasswordTitle": "Ndrysho Fjalëkalimin",
     "changePasswordDescription": "Futni fjalëkalimin tuaj aktual dhe zgjidhni një fjalëkalim të ri të sigurt",
     "currentPassword": "Fjalëkalimi Aktual",
@@ -821,13 +834,11 @@
     "passwordChangeError": "Dështoi ndryshimi i fjalëkalimit",
     "changing": "Duke ndryshuar...",
     "cancel": "Anulo",
-
     "privacyTitle": "Privatësia dhe të Dhënat",
     "privacySubtitle": "Kontrolloni se si përpunohen dhe ruhen të dhënat tuaja",
     "dataRetention": "Ruajtja e të Dhënave",
     "dataRetentionDescription": "Të dhënat tuaja ruhen sipas politikës sonë të privatësisë",
     "automatic": "Automatike",
-
     "deleteAccountTitle": "Fshini Llogarinë",
     "deleteAccountDescription": "Duhet të fshini llogarinë tuaj? Kontaktoni ekipin tonë të mbështetjes për ndihmë.",
     "contactSupport": "Vizitoni faqen tonë të mbështetjes:"
@@ -1100,5 +1111,25 @@
     "backToOperators": "Kthehu te të gjithë operatorët",
     "checkPrice": "Kontrollo Çmimin",
     "startingFrom": "Duke filluar nga"
+  },
+  "home": {
+    "benefits": {
+      "routes": {
+        "title": "Ju lidhim me Evropën",
+        "desc": "Udhëtoni nga Maqedonia drejt destinacioneve të njohura evropiane me rezervim të thjeshtë online."
+      },
+      "comfort": {
+        "title": "Komoditet gjatë rrugës",
+        "desc": "Autobusë modernë, ulëse të rehatshme, klimatizim dhe një përvojë më e qetë udhëtimi."
+      },
+      "booking": {
+        "title": "Zgjidh, rezervo, udhëto",
+        "desc": "Gjeni itinerarin tuaj, paguani në mënyrë të sigurt dhe merrni biletën menjëherë."
+      },
+      "together": {
+        "title": "Udhëtoni së bashku",
+        "desc": "Rezervoni për veten, familjen ose grupin tuaj me vetëm disa klikime."
+      }
+    }
   }
 }

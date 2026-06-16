@@ -199,7 +199,6 @@
     "manageDescription": "Scopri come modificare o annullare le tue prenotazioni",
     "modifyBooking": "Come Modificare una Prenotazione",
     "modifyBookingSteps": {
-      "intro": "Per modificare la tua prenotazione:",
       "1": "Accedi al tuo account sul nostro sito web o app",
       "2": "Vai su \"Le Mie Prenotazioni\"",
       "3": "Seleziona la prenotazione che desideri modificare",
@@ -207,6 +206,7 @@
       "5": "Apporta le modifiche desiderate",
       "6": "Paga eventuali differenze nel prezzo o costi",
       "7": "Ricevi una conferma della tua prenotazione modificata",
+      "intro": "Per modificare la tua prenotazione:",
       "note": "Nota: Le modifiche sono soggette alla nostra politica di modifica e possono comportare costi."
     },
     "cancellationPolicy": "Politica di Cancellazione",
@@ -232,7 +232,15 @@
     "missBus": "Cosa succede se perdo il mio autobus?",
     "missBusContent": "Se perdi il tuo autobus, il tuo biglietto viene generalmente considerato nullo. Tuttavia, comprendiamo che possono verificarsi situazioni impreviste. Contatta il nostro servizio clienti il prima possibile e faremo del nostro meglio per sistemarti sul prossimo autobus disponibile, soggetto a disponibilità e possibili costi aggiuntivi.",
     "powerOutlets": "Ci sono prese di corrente sull'autobus?",
-    "powerOutletsContent": "La maggior parte dei nostri autobus è dotata di prese di corrente per ogni posto. Tuttavia, la disponibilità può variare a seconda dell'autobus specifico e del percorso. Ti consigliamo di portare un caricabatterie portatile come backup, specialmente per viaggi più lunghi."
+    "powerOutletsContent": "La maggior parte dei nostri autobus è dotata di prese di corrente per ogni posto. Tuttavia, la disponibilità può variare a seconda dell'autobus specifico e del percorso. Ti consigliamo di portare un caricabatterie portatile come backup, specialmente per viaggi più lunghi.",
+    "popularEuropeRoutes": "Quali tratte autobus europee posso prenotare online?",
+    "popularEuropeRoutesContent": "Puoi cercare e prenotare tratte popolari dalla Macedonia e dai Balcani verso destinazioni in Europa, tra cui Germania, Svizzera, Austria, Italia e città regionali vicine quando gli orari sono disponibili.",
+    "crossBorderBooking": "Posso prenotare biglietti autobus internazionali dai Balcani?",
+    "crossBorderBookingContent": "Sì. GoBusly supporta prenotazioni transfrontaliere sulle tratte disponibili, così puoi confrontare partenze, prezzi, operatori e tempi di viaggio prima di scegliere il viaggio adatto ai tuoi piani.",
+    "printTicket": "Devo stampare il mio biglietto dell'autobus?",
+    "printTicketContent": "Nella maggior parte dei casi, il biglietto elettronico sul telefono è sufficiente. Consigliamo comunque di avere il telefono carico e di salvare il biglietto offline. Alcuni operatori possono richiedere un biglietto stampato, quindi controlla sempre le istruzioni nell'email di prenotazione.",
+    "bestTimeToBook": "Qual è il momento migliore per prenotare biglietti autobus per l'Europa?",
+    "bestTimeToBookContent": "Per periodi di viaggio intensi, festività e rotte della diaspora, prenotare prima di solito offre una migliore disponibilità di posti e più scelte di partenza. I biglietti last minute possono essere disponibili, ma le tratte popolari possono esaurirsi."
   },
   "extrasInfo": {
     "title": "Opzioni Flex Viaggio",
@@ -320,6 +328,13 @@
       "reliableDesc": "Partenze e arrivi puntuali",
       "secure": "Prenotazione sicura",
       "secureDesc": "Sistema di prenotazione online sicuro e protetto"
+    },
+    "busImageAlt": "Pullman IDoTours",
+    "badge": "Prenotazione autobus semplice in tutta Europa",
+    "trust": {
+      "secure": "Pagamento sicuro",
+      "fast": "Biglietti istantanei",
+      "comfort": "Tratte confortevoli"
     }
   },
   "about": {
@@ -808,7 +823,6 @@
     "exportSuccess": "I tuoi dati sono stati scaricati con successo",
     "exportError": "Esportazione dati fallita. Riprova",
     "userNotFound": "Utente non trovato. Effettua nuovamente l'accesso",
-
     "accountSecurityTitle": "Sicurezza Account",
     "accountSecuritySubtitle": "Gestisci la tua password e la sicurezza di accesso",
     "securityInfo": "Mantieni il tuo account sicuro utilizzando una password robusta",
@@ -819,7 +833,6 @@
     "lastLogin": "Ultimo accesso: {date}",
     "secure": "Sicuro",
     "unknown": "Sconosciuto",
-
     "changePasswordTitle": "Cambia Password",
     "changePasswordDescription": "Inserisci la tua password attuale e scegli una nuova password sicura",
     "currentPassword": "Password Attuale",
@@ -831,13 +844,11 @@
     "passwordChangeError": "Impossibile cambiare la password",
     "changing": "Modifica in corso...",
     "cancel": "Annulla",
-
     "privacyTitle": "Privacy e Dati",
     "privacySubtitle": "Controlla come vengono elaborati e archiviati i tuoi dati",
     "dataRetention": "Conservazione Dati",
     "dataRetentionDescription": "I tuoi dati vengono conservati secondo la nostra politica sulla privacy",
     "automatic": "Automatico",
-
     "deleteAccountTitle": "Elimina Account",
     "deleteAccountDescription": "Hai bisogno di eliminare il tuo account? Contatta il nostro team di supporto per assistenza.",
     "contactSupport": "Visita la nostra pagina di supporto:"
@@ -1110,5 +1121,25 @@
     "backToOperators": "Torna a tutti gli operatori",
     "checkPrice": "Verifica Prezzo",
     "startingFrom": "A partire da"
+  },
+  "home": {
+    "benefits": {
+      "routes": {
+        "title": "Ti colleghiamo all'Europa",
+        "desc": "Viaggia dalla Macedonia verso popolari destinazioni europee con una semplice prenotazione online."
+      },
+      "comfort": {
+        "title": "Comfort in viaggio",
+        "desc": "Autobus moderni, sedili comodi, aria condizionata e un'esperienza di viaggio più piacevole."
+      },
+      "booking": {
+        "title": "Scegli, prenota, viaggia",
+        "desc": "Trova la tua tratta, paga in modo sicuro e ricevi subito il biglietto."
+      },
+      "together": {
+        "title": "Viaggiate insieme",
+        "desc": "Prenota per te, la tua famiglia o il tuo gruppo in pochi clic."
+      }
+    }
   }
 }

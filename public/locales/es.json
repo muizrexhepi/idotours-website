@@ -199,7 +199,6 @@
     "manageDescription": "Aprende cómo modificar o cancelar tus reservas",
     "modifyBooking": "Cómo Modificar una Reserva",
     "modifyBookingSteps": {
-      "intro": "Para modificar tu reserva:",
       "1": "Inicia sesión en tu cuenta en nuestro sitio web o aplicación",
       "2": "Ve a 'Mis Reservas'",
       "3": "Selecciona la reserva que deseas modificar",
@@ -207,6 +206,7 @@
       "5": "Haz los cambios deseados",
       "6": "Paga cualquier diferencia en la tarifa o tarifas",
       "7": "Recibe una confirmación de tu reserva modificada",
+      "intro": "Para modificar tu reserva:",
       "note": "Nota: Las modificaciones están sujetas a nuestra política de cambios y pueden incurrir en tarifas."
     },
     "cancellationPolicy": "Política de Cancelación",
@@ -232,7 +232,15 @@
     "missBus": "¿Qué sucede si pierdo mi autobús?",
     "missBusContent": "Si pierde su autobús, su boleto generalmente se considera nulo. Sin embargo, entendemos que pueden surgir situaciones inesperadas. Contacte a nuestro servicio al cliente lo antes posible, y haremos nuestro mejor esfuerzo para acomodarlo en el próximo autobús disponible, sujeto a disponibilidad y posibles cargos adicionales.",
     "powerOutlets": "¿Hay enchufes eléctricos en el autobús?",
-    "powerOutletsContent": "La mayoría de nuestros autobuses están equipados con enchufes eléctricos para cada asiento. Sin embargo, la disponibilidad puede variar según el autobús específico y la ruta. Recomendamos traer un cargador portátil como respaldo, especialmente para viajes más largos."
+    "powerOutletsContent": "La mayoría de nuestros autobuses están equipados con enchufes eléctricos para cada asiento. Sin embargo, la disponibilidad puede variar según el autobús específico y la ruta. Recomendamos traer un cargador portátil como respaldo, especialmente para viajes más largos.",
+    "popularEuropeRoutes": "¿Qué rutas de autobús por Europa puedo reservar online?",
+    "popularEuropeRoutesContent": "Puedes buscar y reservar rutas populares desde Macedonia y los Balcanes hacia destinos de Europa, incluidos Alemania, Suiza, Austria, Italia y ciudades regionales cercanas cuando haya horarios disponibles.",
+    "crossBorderBooking": "¿Puedo reservar billetes de autobús internacionales desde los Balcanes?",
+    "crossBorderBookingContent": "Sí. GoBusly admite reservas transfronterizas en las rutas disponibles, para que puedas comparar salidas, precios, operadores y tiempos de viaje antes de elegir el viaje que encaja con tus planes.",
+    "printTicket": "¿Necesito imprimir mi billete de autobús?",
+    "printTicketContent": "En la mayoría de los casos, tu billete electrónico en el teléfono es suficiente. Aun así recomendamos mantener el teléfono cargado y guardar el billete sin conexión. Algunos operadores pueden pedir un billete impreso, así que revisa siempre las instrucciones del correo de reserva.",
+    "bestTimeToBook": "¿Cuál es el mejor momento para reservar billetes de autobús a Europa?",
+    "bestTimeToBookContent": "Para periodos de alta demanda, festivos y rutas de la diáspora, reservar con antelación suele ofrecer mejor disponibilidad de asientos y más opciones de salida. Puede haber billetes de última hora, pero las rutas populares pueden agotarse."
   },
   "extrasInfo": {
     "title": "Opciones Flex de Viaje",
@@ -320,6 +328,13 @@
       "reliableDesc": "Salidas y llegadas puntuales",
       "secure": "Reserva segura",
       "secureDesc": "Sistema de reservas en línea seguro y protegido"
+    },
+    "busImageAlt": "Autobús IDoTours",
+    "badge": "Reserva sencilla de autobuses por Europa",
+    "trust": {
+      "secure": "Pago seguro",
+      "fast": "Billetes instantáneos",
+      "comfort": "Rutas cómodas"
     }
   },
   "about": {
@@ -807,7 +822,6 @@
     "exportSuccess": "Tus datos se han descargado exitosamente",
     "exportError": "Fallo en la exportación de datos. Inténtalo de nuevo",
     "userNotFound": "Usuario no encontrado. Inicia sesión nuevamente",
-
     "accountSecurityTitle": "Seguridad de la Cuenta",
     "accountSecuritySubtitle": "Administra tu contraseña y seguridad de inicio de sesión",
     "securityInfo": "Mantén tu cuenta segura usando una contraseña fuerte",
@@ -818,7 +832,6 @@
     "lastLogin": "Último inicio de sesión: {date}",
     "secure": "Seguro",
     "unknown": "Desconocido",
-
     "changePasswordTitle": "Cambiar Contraseña",
     "changePasswordDescription": "Ingresa tu contraseña actual y elige una nueva contraseña segura",
     "currentPassword": "Contraseña Actual",
@@ -830,13 +843,11 @@
     "passwordChangeError": "No se pudo cambiar la contraseña",
     "changing": "Cambiando...",
     "cancel": "Cancelar",
-
     "privacyTitle": "Privacidad y Datos",
     "privacySubtitle": "Controla cómo se procesan y almacenan tus datos",
     "dataRetention": "Retención de Datos",
     "dataRetentionDescription": "Tus datos se conservan según nuestra política de privacidad",
     "automatic": "Automático",
-
     "deleteAccountTitle": "Eliminar Cuenta",
     "deleteAccountDescription": "¿Necesitas eliminar tu cuenta? Contacta nuestro equipo de soporte para asistencia.",
     "contactSupport": "Visita nuestra página de soporte:"
@@ -1109,5 +1120,25 @@
     "backToOperators": "Volver a todos los operadores",
     "checkPrice": "Consultar Precio",
     "startingFrom": "Desde"
+  },
+  "home": {
+    "benefits": {
+      "routes": {
+        "title": "Te conectamos con Europa",
+        "desc": "Viaja desde Macedonia a destinos europeos populares con una reserva online sencilla."
+      },
+      "comfort": {
+        "title": "Comodidad en ruta",
+        "desc": "Autobuses modernos, asientos cómodos, aire acondicionado y una experiencia de viaje más agradable."
+      },
+      "booking": {
+        "title": "Elige, reserva, viaja",
+        "desc": "Encuentra tu ruta, paga de forma segura y recibe tu billete al instante."
+      },
+      "together": {
+        "title": "Viajen juntos",
+        "desc": "Reserva para ti, tu familia o tu grupo con solo unos clics."
+      }
+    }
   }
 }

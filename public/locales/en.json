@@ -15,6 +15,26 @@
     "account": "Account",
     "home": "Search"
   },
+  "home": {
+    "benefits": {
+      "routes": {
+        "title": "Connecting you to Europe",
+        "desc": "Travel from Macedonia to popular European destinations with simple online booking."
+      },
+      "comfort": {
+        "title": "Comfort on the go",
+        "desc": "Modern buses, comfortable seats, air conditioning, and a smoother travel experience."
+      },
+      "booking": {
+        "title": "Choose, book, travel",
+        "desc": "Find your route, pay securely, and receive your ticket instantly."
+      },
+      "together": {
+        "title": "Go together",
+        "desc": "Book for yourself, your family, or your group in just a few clicks."
+      }
+    }
+  },
   "mobileAppSection": {
     "title": "Travel without the hassle",
     "description": "Book in seconds, board with confidence. Your entire trip in your pocket.",
@@ -185,7 +205,6 @@
         "bank": "Bank transfers (for select routes)"
       }
     },
-
     "seatSelection": "Seat Selection",
     "seatSelectionContent": "You can select your preferred seats during the booking process. Seat selection is subject to availability and may incur an additional fee for premium seats (e.g., extra legroom).",
     "groupBookings": "Group Bookings",
@@ -194,7 +213,6 @@
     "manageDescription": "Learn how to modify or cancel your bookings",
     "modifyBooking": "How to Modify a Booking",
     "modifyBookingSteps": {
-      "intro": "To modify your booking:",
       "1": "Log in to your account on our website or app",
       "2": "Go to \"My Bookings\"",
       "3": "Select the booking you want to modify",
@@ -202,6 +220,7 @@
       "5": "Make your desired changes",
       "6": "Pay any difference in fare or fees",
       "7": "Receive a confirmation of your modified booking",
+      "intro": "To modify your booking:",
       "note": "Note: Modifications are subject to our change policy and may incur fees."
     },
     "cancellationPolicy": "Cancellation Policy",
@@ -227,7 +246,15 @@
     "missBus": "What happens if I miss my bus?",
     "missBusContent": "If you miss your bus, your ticket is typically considered void. However, we understand that unexpected situations can arise. Contact our customer service as soon as possible, and we'll do our best to accommodate you on the next available bus, subject to availability and possible additional fees.",
     "powerOutlets": "Are there power outlets on the bus?",
-    "powerOutletsContent": "Most of our buses are equipped with power outlets for each seat. However, availability may vary depending on the specific bus and route. We recommend bringing a portable charger as a backup, especially for longer journeys."
+    "powerOutletsContent": "Most of our buses are equipped with power outlets for each seat. However, availability may vary depending on the specific bus and route. We recommend bringing a portable charger as a backup, especially for longer journeys.",
+    "popularEuropeRoutes": "Which European bus routes can I book online?",
+    "popularEuropeRoutesContent": "You can search and book popular routes from Macedonia and the Balkans to destinations across Europe, including Germany, Switzerland, Austria, Italy, and nearby regional cities when schedules are available.",
+    "crossBorderBooking": "Can I book international bus tickets from the Balkans?",
+    "crossBorderBookingContent": "Yes. GoBusly supports cross-border bus bookings on available routes, so you can compare departures, prices, operators, and travel times before choosing the trip that fits your plans.",
+    "printTicket": "Do I need to print my bus ticket?",
+    "printTicketContent": "In most cases, your e-ticket on your phone is enough. We still recommend keeping a charged phone and saving the ticket offline. Some operators may request a printed ticket, so always check the instructions in your booking email.",
+    "bestTimeToBook": "When is the best time to book bus tickets to Europe?",
+    "bestTimeToBookContent": "For busy travel periods, holidays, and diaspora routes, booking earlier usually gives you better seat availability and more departure choices. Last-minute tickets may still be available, but popular routes can sell out."
   },
   "extrasInfo": {
     "title": "Flexibility Options",
@@ -330,8 +357,15 @@
     }
   },
   "hero": {
+    "busImageAlt": "IDoTours coach bus",
+    "badge": "Simple bus booking across Europe",
     "title": "Navigate Roads with Comfort",
     "desc": "Book your bus tickets for a comfortable journey",
+    "trust": {
+      "secure": "Secure checkout",
+      "fast": "Instant tickets",
+      "comfort": "Comfort routes"
+    },
     "features": {
       "comfortable": "Comfortable Travel",
       "comfortableDesc": "Experience comfort with our modern bus fleet",
@@ -802,7 +836,6 @@
     "exportSuccess": "Your data has been successfully downloaded",
     "exportError": "Failed to export data. Please try again",
     "userNotFound": "User not found. Please log in again",
-
     "accountSecurityTitle": "Account Security",
     "accountSecuritySubtitle": "Manage your password and login security",
     "securityInfo": "Keep your account secure by using a strong password",
@@ -813,7 +846,6 @@
     "lastLogin": "Last login: {{date}}",
     "secure": "Secure",
     "unknown": "Unknown",
-
     "changePasswordTitle": "Change Password",
     "changePasswordDescription": "Enter your current password and choose a new secure password",
     "currentPassword": "Current Password",
@@ -825,13 +857,11 @@
     "passwordChangeError": "Failed to change password",
     "changing": "Changing...",
     "cancel": "Cancel",
-
     "privacyTitle": "Privacy & Data",
     "privacySubtitle": "Control how your data is processed and stored",
     "dataRetention": "Data Retention",
     "dataRetentionDescription": "Your data is retained according to our privacy policy",
     "automatic": "Automatic",
-
     "deleteAccountTitle": "Delete Account",
     "deleteAccountDescription": "Need to delete your account? Contact our support team for assistance.",
     "contactSupport": "Visit our support page:"

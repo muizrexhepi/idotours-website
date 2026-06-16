@@ -216,6 +216,42 @@ const HelpPageClient = () => {
               {t("infoTabs.powerOutletsContent")}
             </AccordionContent>
           </AccordionItem>
+
+          <AccordionItem value="item-17">
+            <AccordionTrigger className="text-left">
+              {t("infoTabs.popularEuropeRoutes")}
+            </AccordionTrigger>
+            <AccordionContent>
+              {t("infoTabs.popularEuropeRoutesContent")}
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-18">
+            <AccordionTrigger className="text-left">
+              {t("infoTabs.crossBorderBooking")}
+            </AccordionTrigger>
+            <AccordionContent>
+              {t("infoTabs.crossBorderBookingContent")}
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-19">
+            <AccordionTrigger className="text-left">
+              {t("infoTabs.printTicket")}
+            </AccordionTrigger>
+            <AccordionContent>
+              {t("infoTabs.printTicketContent")}
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-20">
+            <AccordionTrigger className="text-left">
+              {t("infoTabs.bestTimeToBook")}
+            </AccordionTrigger>
+            <AccordionContent>
+              {t("infoTabs.bestTimeToBookContent")}
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       </div>
 
